@@ -1,0 +1,14 @@
+<nav class="flex justify-between items-center px-4">
+  <div class="logo pt-2">
+    <a routerLink="/home" class="font-medium text-shadow-2xs text-shadow-red-600">ChinaGO</a>
+  </div>
+  <ul class="flex mx-auto caret-transparent">
+    <li class ="pt-6 px-2 pb-2" routerLinkActive="bg-red-900 text-white" [routerLinkActiveOptions]="{ exact: true }"><a routerLink="/" ariaCurrentWhenActive="page">Inicio</a></li>
+    <li class ="pt-6 px-2" routerLinkActive="bg-red-900 text-white"><a routerLink="/tarifas">Tarifas</a></li>
+    <li class ="pt-6 px-2"routerLinkActive="bg-red-900 text-white"><a routerLink="/calculadora">Calculadora</a></li>
+    <li class ="pt-6 px-2" routerLinkActive="bg-red-900 text-white"><a routerLink="/soporte">Soporte</a></li>
+  </ul>
+  <ul class="caret-transparent">
+    <li class="rounded-t-lg bg-red-700 pb-2 mt-6"><a href="/login" class="text-white m-2 pb-8">Ingresar</a></li>
+  </ul>
+</nav>
