@@ -16,7 +16,7 @@ export class NavComponent {
   ) {}
 
   ngOnInit() {
-    this.checkLoginStatus();
+    
   }
 
 }
