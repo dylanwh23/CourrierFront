@@ -9,10 +9,11 @@ import {
 import { UsuarioService } from '../servicios/usuario.service';
 import { NgFor, NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink],
+  imports: [RouterLink, ReactiveFormsModule, NgFor, NgIf, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
