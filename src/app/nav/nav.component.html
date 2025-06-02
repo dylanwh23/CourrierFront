@@ -8,7 +8,14 @@
     <li class ="pt-6 px-2"routerLinkActive="bg-red-900 text-white"><a routerLink="/calculadora">Calculadora</a></li>
     <li class ="pt-6 px-2" routerLinkActive="bg-red-900 text-white"><a routerLink="/soporte">Soporte</a></li>
   </ul>
-  <ul class="caret-transparent">
-    <li class="rounded-t-lg bg-red-700 pb-2 mt-6"><a href="/login" class="text-white m-2 pb-8">Ingresar</a></li>
+  <ul class="caret-transparent flex gap-2" *ngIf="isAuthenticated$ | async; else notAuthenticatedBlock">
+    <li class="rounded-t-lg bg-red-700 pb-2 mt-6"><a class="text-white m-2 pb-8" (click)="onLogout()">Cerrar Sesión</a></li>
+    <li class="rounded-t-lg bg-red-700 pb-2 mt-6"><a href="/profile" class="text-white m-2 pb-8">Perfil</a></li>
   </ul>
+  <ng-template #notAuthenticatedBlock>
+    <ul class="caret-transparent">
+      <li class="rounded-t-lg bg-red-700 pb-2 mt-6"><a href="/login" class="text-white m-2 pb-8">Ingresar</a></li>
+    </ul>
+  </ng-template>
+  
 </nav>
