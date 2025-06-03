@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   FormBuilder,
@@ -9,11 +9,10 @@ import {
 import { UsuarioService } from '../servicios/usuario.service';
 import { NgFor, NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink, ReactiveFormsModule, NgFor, NgIf, CommonModule],
+  imports: [RouterLink, ReactiveFormsModule, NgFor, CommonModule, NgIf],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
