@@ -1,21 +1,72 @@
-<nav class="flex justify-between items-center px-4">
-  <div class="logo pt-2">
-    <a routerLink="/home" class="font-medium text-shadow-2xs text-shadow-red-600">ChinaGO</a>
-  </div>
-  <ul class="flex mx-auto caret-transparent">
-    <li class ="pt-6 px-2 pb-2" routerLinkActive="bg-red-900 text-white" [routerLinkActiveOptions]="{ exact: true }"><a routerLink="/" ariaCurrentWhenActive="page">Inicio</a></li>
-    <li class ="pt-6 px-2" routerLinkActive="bg-red-900 text-white"><a routerLink="/tarifas">Tarifas</a></li>
-    <li class ="pt-6 px-2"routerLinkActive="bg-red-900 text-white"><a routerLink="/calculadora">Calculadora</a></li>
-    <li class ="pt-6 px-2" routerLinkActive="bg-red-900 text-white"><a routerLink="/soporte">Soporte</a></li>
-  </ul>
-  <ul class="caret-transparent flex gap-2" *ngIf="isAuthenticated$ | async; else notAuthenticatedBlock">
-    <li class="rounded-t-lg bg-red-700 pb-2 mt-6"><a class="text-white m-2 pb-8" (click)="onLogout()">Cerrar Sesión</a></li>
-    <li class="rounded-t-lg bg-red-700 pb-2 mt-6"><a href="/profile" class="text-white m-2 pb-8">Perfil</a></li>
-  </ul>
-  <ng-template #notAuthenticatedBlock>
-    <ul class="caret-transparent">
-      <li class="rounded-t-lg bg-red-700 pb-2 mt-6"><a href="/login" class="text-white m-2 pb-8">Ingresar</a></li>
+<nav class="flex justify-between items-center">
+  <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full mx-4">
+    <div class="logo pt-2 justify-self-start">
+      <a
+        routerLink="/home"
+        class="font-medium text-shadow-2xs text-shadow-red-600"
+        >ChinaGO</a
+      >
+    </div>
+    <ul class="flex caret-transparent">
+      <li
+        class="pt-6 px-2 pb-2"
+        routerLinkActive="bg-red-900 text-white"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a routerLink="/" ariaCurrentWhenActive="page">Inicio</a>
+      </li>
+      <li class="pt-6 px-2" routerLinkActive="bg-red-900 text-white">
+        <a routerLink="/tarifas">Tarifas</a>
+      </li>
+      <li class="pt-6 px-2" routerLinkActive="bg-red-900 text-white">
+        <a routerLink="/calculadora">Calculadora</a>
+      </li>
+      <li class="pt-6 px-2" routerLinkActive="bg-red-900 text-white">
+        <a routerLink="/soporte">Soporte</a>
+      </li>
     </ul>
-  </ng-template>
-  
+    <div class="justify-self-end">
+      <ul
+        class="caret-transparent flex gap-2"
+        *ngIf="isAuthenticated$ | async; else notAuthenticatedBlock"
+      >
+        <li
+          routerLinkActive
+          #rla="routerLinkActive"
+          [ngClass]="{
+            'rounded-b-lg mb-2 pt-6': !rla.isActive,
+            'rounded-t-lg pb-2 mt-6': rla.isActive
+          }"
+          class="bg-red-700"
+        >
+          <a routerLink="/profile" class="text-white m-2 pb-8">Perfil</a>
+        </li>
+      </ul>
+      <ng-template #notAuthenticatedBlock>
+        <ul class="caret-transparent">
+            <li
+            routerLinkActive
+            #rlaLogin="routerLinkActive"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [ngClass]="{
+              'rounded-b-lg mb-2 pt-6': !(rlaLogin.isActive || rlaRegister.isActive),
+              'rounded-t-lg pb-2 mt-6': (rlaLogin.isActive || rlaRegister.isActive)
+            }"
+            class="bg-red-700"
+            >
+            <a routerLink="/login" class="text-white m-2 pb-8">Ingresar</a>
+            </li>
+            <li
+            routerLinkActive
+            #rlaRegister="routerLinkActive"
+            [routerLinkActiveOptions]="{ exact: true }"
+            style="display: none"
+            >
+            <!-- Hidden li just for routerLinkActive tracking -->
+            <a routerLink="/register"></a>
+            </li>
+        </ul>
+      </ng-template>
+    </div>
+  </div>
 </nav>
