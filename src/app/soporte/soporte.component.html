@@ -1,125 +1,196 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- soporte.component.html -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<div class="bg-red-900 text-white min-h-full">
+  <!-- Header -->
+  <header class="border-b-2 border-gray-300 mb-8 pb-4">
+    <h1 class="text-3xl md:text-5xl font-bold text-center pt-6">SOPORTE</h1>
+    <p class="text-center text-lg md:text-xl text-white/90 mt-2">
+      Si tienes alguna duda o problema, estamos aquí para ayudarte.
+    </p>
+  </header>
 
-<body class="bg-red-900 text-white">
+  <!-- Contenedor principal -->
+  <div class="max-w-5xl mx-auto px-4">
 
-    <header class="border-b-2 border-gray-300 mb-8 pb-4">
+    <!-- Preguntas frecuentes -->
+    <h1 class="text-center text-2xl pb-4 font-bold">PREGUNTAS FRECUENTES</h1>
+    <p class="text-gray-300 text-base mb-8 text-center">
+      Aquí encontrarás respuestas a las preguntas más frecuentes y formas de contactarnos si necesitas asistencia
+      adicional.
+    </p>
 
-        <h1 class="text-3xl md:text-5xl font-bold text-center pt-6">
-            SOPORTE
-        </h1>
+    <ul class="space-y-4 mb-12">
+      <!-- 1 -->
+      <li>
+        <details class="border border-gray-300 rounded-lg bg-white/10 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="cursor-pointer p-4 text-white font-medium hover:bg-white/20 transition-colors rounded-t-lg">
+            ¿Cómo puedo rastrear mi pedido?
+          </summary>
+          <div class="px-4 pb-4 text-gray-200">
+            Para rastrear tu pedido, inicia sesión en tu cuenta, ve a “Mis pedidos” y haz clic en “Ver detalles”. Ahí
+            aparecerá el número de seguimiento y el enlace al transportista.
+          </div>
+        </details>
+      </li>
 
-        <p class="text-center text-lg md:text-xl text-white/90 mt-2">
-            Si tienes alguna duda o problema, estamos aquí para ayudarte.
+      <!-- 2 -->
+      <li>
+        <details class="border border-gray-300 rounded-lg bg-white/10 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="cursor-pointer p-4 text-white font-medium hover:bg-white/20 transition-colors rounded-t-lg">
+            ¿Qué debo hacer si mi pedido llega dañado?
+          </summary>
+          <div class="px-4 pb-4 text-gray-200">
+            Si tu pedido llega dañado, toma fotografías claras del empaque y del producto y envíalas a soporte dentro de
+            los primeros 7 días posteriores a la recepción. Nuestro equipo verificará la información y gestionará el
+            reemplazo o reembolso según nuestras políticas de garantía.
+          </div>
+        </details>
+      </li>
 
-        </p>
-    </header>
+      <!-- 3 -->
+      <li>
+        <details class="border border-gray-300 rounded-lg bg-white/10 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="cursor-pointer p-4 text-white font-medium hover:bg-white/20 transition-colors rounded-t-lg">
+            ¿Cómo puedo cambiar mi dirección de envío?
+          </summary>
+          <div class="px-4 pb-4 text-gray-200">
+            Para cambiar la dirección antes de finalizar tu compra, ve a “Mi cuenta” → “Direcciones” y modifica tu
+            dirección principal. Si ya completaste la compra, envía un correo a soporte con tu número de orden y la
+            nueva dirección; haremos lo posible por actualizarla antes de que el paquete salga del almacén.
+          </div>
+        </details>
+      </li>
 
-    <div class="max-w-5xl mx-auto px-4">
+      <!-- 4 -->
+      <li>
+        <details class="border border-gray-300 rounded-lg bg-white/10 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="cursor-pointer p-4 text-white font-medium hover:bg-white/20 transition-colors rounded-t-lg">
+            ¿En cuánto tiempo llega mi pedido?
+          </summary>
+          <div class="px-4 pb-4 text-gray-200">
+            El plazo de entrega varía según el país de destino y el método de envío:
+            <ul class="list-disc list-inside mt-2 text-gray-200">
+              <li>Envío estándar: 10–15 días hábiles.</li>
+              <li>Envío exprés: 3–5 días hábiles.</li>
+            </ul>
+            Una vez despachado, recibirás un número de seguimiento para monitorear el estado exacto del envío.
+          </div>
+        </details>
+      </li>
 
-        <h1 class="text-center text-2xl pb-4 font-bold">PREGUNTAS FRECUENTES</h1>
+      <!-- 5 -->
+      <li>
+        <details class="border border-gray-300 rounded-lg bg-white/10 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="cursor-pointer p-4 text-white font-medium hover:bg-white/20 transition-colors rounded-t-lg">
+            ¿Qué métodos de pago aceptan?
+          </summary>
+          <div class="px-4 pb-4 text-gray-200">
+            Aceptamos:
+            <ul class="list-disc list-inside mt-2 text-gray-200">
+              <li>Tarjetas de crédito y débito (Visa, MasterCard, American Express).</li>
+              <li>PayPal.</li>
+              <li>Transferencia bancaria (solo para pedidos mayores a $100 USD).</li>
+            </ul>
+            Si necesitas otra modalidad, contáctanos para evaluar opciones.
+          </div>
+        </details>
+      </li>
 
-        <p class="text-gray-300 text-base mb-8 text-center">
-            Aquí encontrarás respuestas a las preguntas más frecuentes y formas de contactarnos si necesitas asistencia
-            adicional.
-        </p>
+      <!-- 6 -->
+      <li>
+        <details class="border border-gray-300 rounded-lg bg-white/10 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="cursor-pointer p-4 text-white font-medium hover:bg-white/20 transition-colors rounded-t-lg">
+            ¿Cómo puedo cancelar mi pedido?
+          </summary>
+          <div class="px-4 pb-4 text-gray-200">
+            Puedes cancelar tu pedido siempre y cuando aún no haya sido despachado:
+            <ol class="list-decimal list-inside mt-2 text-gray-200">
+              <li>Ingresa a “Mis pedidos” en tu cuenta.</li>
+              <li>Selecciona la orden que deseas cancelar.</li>
+              <li>Haz clic en “Cancelar pedido” y confirma tu decisión.</li>
+            </ol>
+            Si ya salió del almacén, envía un correo a soporte para intentar interceptarlo. El reembolso se procesa en
+            3–5 días hábiles tras la cancelación.
+          </div>
+        </details>
+      </li>
 
-        <div>
-
-            <div class="">
-
-                <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 list-none mb-8">
-                    <li>
-                        <a href="#"
-                            class="block text-white font-medium border border-gray-300 rounded-lg p-4 bg-white/10 hover:bg-white/20 transition-colors">
-                            ¿Cómo puedo rastrear mi pedido?
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block text-white font-medium border border-gray-300 rounded-lg p-4 bg-white/10 hover:bg-white/20 transition-colors">
-                            ¿Qué debo hacer si mi pedido llega dañado?
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block text-white font-medium border border-gray-300 rounded-lg p-4 bg-white/10 hover:bg-white/20 transition-colors">
-                            ¿Cómo puedo cambiar mi dirección de envío?
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block text-white font-medium border border-gray-300 rounded-lg p-4 bg-white/10 hover:bg-white/20 transition-colors">
-                            ¿En cuánto tiempo llega mi pedido?
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block text-white font-medium border border-gray-300 rounded-lg p-4 bg-white/10 hover:bg-white/20 transition-colors">
-                            ¿Qué métodos de pago aceptan?
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block text-white font-medium border border-gray-300 rounded-lg p-4 bg-white/10 hover:bg-white/20 transition-colors">
-                            ¿Cómo puedo cancelar mi pedido?
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block text-white font-medium border border-gray-300 rounded-lg p-4 bg-white/10 hover:bg-white/20 transition-colors">
-                            ¿Qué debo hacer si no recibo mi pedido?
-                        </a>
-                    </li>
-                </ul>
-
-            </div>
-
-            <div class="pt-6 pb-16">
-
-                <p class="text-gray-300 text-base mb-4 pt-6">
-                    Si tienes más preguntas o necesitas ayuda personalizada, no dudes en contactarnos a través de
-                    nuestro formulario por correo electrónico.
-                </p>
-
-                <form class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md flex flex-col gap-4 mx-auto">
-                    <h2 class="text-red-700 text-2xl font-bold mb-6 pt-6">Contáctanos</h2>
-
-                    <div class="mb-4 caret-black">
-                        <label for="nombre" class="block text-red-700 mb-1 ">Nombre</label>
-                        <input id="nombre" type="text" name="nombre" required
-                            class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 bg-white text-black" />
-                    </div>
-
-                    <div class="mb-4 caret-black">
-                        <label for="email" class="block text-red-700 mb-1">Correo electrónico</label>
-                        <input id="email" type="email" name="email" required
-                            class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 bg-white text-black" />
-                    </div>
-                    <div class="mb-4 caret-black">
-                        <label for="mensaje" class="block text-red-700 mb-1">Mensaje</label>
-                        <textarea id="mensaje" name="mensaje" rows="4" required
-                            class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 bg-white text-black"></textarea>
-                    </div>
-                    <div class="flex justify-center items-center mb-4">
-                        <button type="submit"
-                            class="px-4 py-2 bg-red-700 text-white font-semibold rounded hover:bg-red-800 w-full cursor-pointer">Enviar
-                        </button>
-                    </div>
-
-                </form>
-
-            </div>
-
+      <!-- 7 -->
+      <li>
+        <details class="border border-gray-300 rounded-lg bg-white/10 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="cursor-pointer p-4 text-white font-medium hover:bg-white/20 transition-colors rounded-t-lg">
+            ¿Qué debo hacer si no recibo mi pedido?
+          </summary>
+          <div class="px-4 pb-4 text-gray-200">
+            Si han pasado más de 15 días hábiles desde el despacho y no ves movimiento en el tracking:
+            <ul class="list-disc list-inside mt-2 text-gray-200">
+              <li>Verifica el estado en la página del transportista con tu número de seguimiento.</li>
+              <li>Si no hay info reciente, envía un correo a soporte con tu número de orden y copia del comprobante de
+                pago.</li>
+            </ul>
+            Investigaremos el caso y te ofreceremos una solución (reenvío o reembolso) según corresponda.
+          </div>
+        </details>
+      </li>
+    </ul>
 
 
-        </div>
+    <!-- Llamado a contacto -->
+    <div class="pt-6 pb-16">
+      <p class="text-gray-300 text-base mb-4 text-center">
+        Si tienes más preguntas o necesitas ayuda personalizada, no dudes en contactarnos a través de nuestro formulario
+        por correo electrónico.
+      </p>
+
+      <!-- Formulario de contacto -->
+      <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg mt-8 text-black">
+        <h2 class="text-2xl font-bold text-center text-red-700 mb-6">Contáctanos</h2>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-1 gap-4">
+
+          <!-- Nombre -->
+          <div>
+            <label class="block text-red-700 font-medium mb-1">Nombre</label>
+            <input formControlName="name" type="text"
+              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-600" />
+            <p *ngIf="form.controls.name.invalid && form.controls.name.touched" class="text-red-600 text-sm mt-1">
+              Nombre requerido.
+            </p>
+          </div>
+
+          <!-- Correo -->
+          <div>
+            <label class="block text-red-700 font-medium mb-1">Correo</label>
+            <input formControlName="email" type="email"
+              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-600" />
+            <p *ngIf="form.controls.email.invalid && form.controls.email.touched" class="text-red-600 text-sm mt-1">
+              Email inválido.
+            </p>
+          </div>
+
+          <!-- Mensaje -->
+          <div>
+            <label class="block text-red-700 font-medium mb-1">Mensaje</label>
+            <textarea formControlName="message" rows="5"
+              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-600"></textarea>
+            <p *ngIf="form.controls.message.invalid && form.controls.message.touched" class="text-red-600 text-sm mt-1">
+              Mensaje requerido.
+            </p>
+          </div>
+
+          <!-- Botón de envío y mensaje de error -->
+          <div class="flex flex-col items-center">
+            <button type="submit" [disabled]="submitting"
+              class="w-full bg-red-700 text-white font-semibold py-2 rounded hover:bg-red-800 transition">
+              {{ submitting ? 'Enviando…' : 'Enviar' }}
+            </button>
+            <p *ngIf="errorMsg" class="text-red-700 text-sm mt-2">
+              {{ errorMsg }}
+            </p>
+          </div>
+
+        </form>
+      </div>
     </div>
 
-</body>
+  </div>
+</div>
