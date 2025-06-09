@@ -16,24 +16,9 @@ export class NavComponent {
   private usuarioService = inject(UsuarioService);
   currentUser$: Observable<User | null> = this.usuarioService.currentUser$;
   isAuthenticated$: Observable<boolean> = this.usuarioService.isAuthenticated$;
-  
   constructor(
   ) {}
-
   ngOnInit() {
     
   }
-
-  onLogout() {
-    this.usuarioService.logout().subscribe({
-      next: () => {
-        console.log('Logout successful');
-        // Aquí podrías redirigir al usuario a la página de inicio o login
-      },
-      error: (err) => {
-        console.error('Logout error:', err);
-      }
-    });
-  }
-
 }
