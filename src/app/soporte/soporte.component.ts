@@ -1,11 +1,55 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SupportService, SupportRequest } from '../servicios/soporte.service';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-soporte',
-  imports: [],
+  selector: 'app-support',
   templateUrl: './soporte.component.html',
-  styleUrl: './soporte.component.css'
+  styleUrls: ['./soporte.component.css'],
+  imports: [ReactiveFormsModule]
 })
-export class SoporteComponent {
+export class SoporteComponent implements OnInit {
+  form!: FormGroup;
+  submitting = false;
+  errorMsg = '';
 
+  constructor(
+    private fb: FormBuilder,
+    private supportService: SupportService
+  ) { }
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      message: ['', Validators.required]
+    });
+  }
+
+  onSubmit() {
+    this.submitting = true;
+    this.errorMsg = '';
+
+    if (this.form.invalid) {
+      this.submitting = false;
+      return;
+    }
+
+    const payload: SupportRequest = this.form.value;
+    this.supportService.send(payload).subscribe({
+      next: res => {
+        alert(res.message);        // “Consulta recibida. Revisa tu correo…”
+        this.form.reset();
+        this.submitting = false;
+      },
+      error: err => {
+        console.error(err);
+        this.errorMsg = 'Hubo un error enviando tu mensaje.';
+        this.submitting = false;
+      }
+    });
+  }
 }
