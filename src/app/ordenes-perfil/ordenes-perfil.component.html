@@ -1,0 +1,13 @@
+<div *ngIf="paquetes.length > 0; else sinPaquetes">
+  <ul>
+    <li *ngFor="let paquete of paquetes">
+      Peso: {{ paquete.peso }} kg — Estado: {{ paquete.estado }} <br>
+      Origen: {{ paquete.direccion_origen }} <br>
+      Destino: {{ paquete.direccion_destino }}
+    </li>
+  </ul>
+</div>
+
+<ng-template #sinPaquetes>
+  <p>No tenés paquetes registrados.</p>
+</ng-template>

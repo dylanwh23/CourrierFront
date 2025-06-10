@@ -2,14 +2,18 @@ import { Component, inject } from '@angular/core';
 import { UsuarioService } from '../servicios/usuario.service';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
+import { OrdenesPerfilComponent } from '../ordenes-perfil/ordenes-perfil.component';
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common'; 
  // Asegúrate de que este modelo exista y sea correcto
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+    standalone: true,
+  imports: [ OrdenesPerfilComponent,CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
+    
 })
 export class ProfileComponent {
   private usuarioService = inject(UsuarioService);
