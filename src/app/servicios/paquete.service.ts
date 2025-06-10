@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({providedIn: 'root'})
 export class PaqueteService {
 
-  private baseUrl = 'http://localhost:8000/api'; // Cambia por la URL real
+  private baseUrl = 'http://localhost:8000'; // Cambia por la URL real
 
   constructor(private http: HttpClient) {}
 

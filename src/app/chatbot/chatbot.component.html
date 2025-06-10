@@ -1,0 +1,60 @@
+<!-- Chatbot Desplegable en Español -->
+<div class="fixed bottom-6 right-6 z-50">
+    <!-- Botón para abrir/cerrar el chatbot -->
+    <button
+        class="bg-red-600 hover:bg-red-700 text-white rounded-full p-4 shadow-lg focus:outline-none flex items-center animate-bounce"
+        (click)="mostrarChat = !mostrarChat"
+        aria-label="Abrir chatbot"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 01-4-.8L3 21l1.8-4A7.96 7.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+    </button>
+
+    <!-- Ventana del chatbot -->
+    <div
+        *ngIf="mostrarChat"
+        class="bg-white rounded-lg shadow-xl w-80 max-w-full flex flex-col h-96 mt-4 mensaje-fade-in"
+    >
+        <!-- Encabezado -->
+        <div class="bg-red-600 text-white rounded-t-lg px-4 py-3 flex justify-between items-center">
+            <span class="font-semibold">Chatbot IA</span>
+            <button class="text-white" (click)="mostrarChat = false" aria-label="Cerrar">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mensajes -->
+        <div #mensajesContainer class="flex-grow overflow-y-auto px-4 py-2 space-y-3">
+            <div *ngFor="let mensaje of mensajes">
+                <div [ngClass]="mensaje.esUsuario ? 'flex justify-end' : 'flex justify-start'">
+                    <div 
+                        [ngClass]="(mensaje.esUsuario ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-900') + ' mensaje-fade-in'"
+                        class="rounded-lg px-3 py-2 max-w-[80%] text-sm"
+                    >
+                        {{ mensaje.texto }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de entrada -->
+        <form class="flex items-center p-3 border-t" (submit)="enviarMensaje($event)">
+            <label for="entrada-chat" class="sr-only">Escribe un mensaje</label>
+            <input
+                id="entrada-chat"
+                type="text"
+                [(ngModel)]="mensajeUsuario"
+                name="mensajeUsuario"
+                class="border border-gray-300 rounded-lg py-2 px-3 w-full mr-2 focus:outline-none"
+                placeholder="Escribe un mensaje..."
+                autocomplete="off"
+            >
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Enviar
+            </button>
+        </form>
+    </div>
+</div>
