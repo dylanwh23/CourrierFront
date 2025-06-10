@@ -12,9 +12,9 @@ export interface SupportRequest {
 @Injectable({ providedIn: 'root' })
 export class SupportService {
   // Si usas proxy:
-  private url = '/api/contact';
+  //private url = '/contact';
   // Si no usas proxy, pon el host completo:
-  // private url = 'http://127.0.0.1:8000/api/contact';
+   private url = 'http://127.0.0.1:8000/api/contact';
 
   constructor(private http: HttpClient) {}
 

@@ -180,7 +180,7 @@
           <!-- Botón de envío y mensaje de error -->
           <div class="flex flex-col items-center">
             <button type="submit" [disabled]="submitting"
-              class="w-full bg-red-700 text-white font-semibold py-2 rounded hover:bg-red-800 transition">
+              class="w-full bg-red-700 text-white font-semibold py-2 rounded hover:bg-red-800 transition cursor-pointer">
               {{ submitting ? 'Enviando…' : 'Enviar' }}
             </button>
             <p *ngIf="errorMsg" class="text-red-700 text-sm mt-2">
