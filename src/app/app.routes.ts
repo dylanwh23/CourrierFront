@@ -7,6 +7,9 @@ import { AboutusComponent } from './aboutus/aboutus.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
+import { MisDatosComponent } from './profile/profileSecciones/mis-datos/mis-datos.component';
+import { MisOrdenesComponent } from './profile/profileSecciones/mis-ordenes/mis-ordenes.component';
+import { MisReclamosComponent } from './profile/profileSecciones/mis-reclamos/mis-reclamos.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +19,13 @@ export const routes: Routes = [
   { path: 'aboutus', component: AboutusComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent }
-
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    children: [
+      { path: 'misdatos', component: MisDatosComponent },
+      { path: 'misordenes', component: MisOrdenesComponent },
+      { path: 'misreclamos', component: MisReclamosComponent }
+    ]
+  }
 ];

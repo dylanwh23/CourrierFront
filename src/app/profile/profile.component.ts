@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { UsuarioService } from '../servicios/usuario.service';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
  // Asegúrate de que este modelo exista y sea correcto
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
