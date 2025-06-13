@@ -10,6 +10,7 @@ import { RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
+    
 })
 export class ProfileComponent {
   private usuarioService = inject(UsuarioService);
