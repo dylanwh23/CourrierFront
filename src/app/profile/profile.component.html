@@ -4,11 +4,10 @@
             <h1 class="text-xl">Dylan Rodriguez</h1>
         </div>
         <div>
-            <ul class="list-none p-0 m-0">
+            <ul class="list-none p-0 m-0 caret-transparent">
                 <li routerLink="misdatos" routerLinkActive="bg-red-700 text-white" class="p-2 border-y-1 border-red-700 hover:bg-red-700 cursor-pointer">Mis Datos</li>
-                <li class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer">Órdenes</li>
-                <li class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer">Reclamos</li>
-                <li class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer">Help</li>
+                <li routerLink="misordenes" routerLinkActive="bg-red-700 text-white" class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer">Órdenes</li>
+                <li routerLink="misreclamos" routerLinkActive="bg-red-700 text-white" class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer">Reclamos</li>
                 <li class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer" (click)="onLogout()">Logout</li>
             </ul>
         </div>
