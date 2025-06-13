@@ -1,0 +1,12 @@
+.mensaje-fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: mensajeFadeIn 0.5s forwards;
+}
+
+@keyframes mensajeFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
