@@ -1,0 +1,55 @@
+<div class="flex flex-col h-fit">
+    <div class="bg-red-700 p-5">
+      <h2 class="text-2xl font-bold text-white text-center tracking-wide">Mi Perfil</h2>
+    </div>
+      <div class="p-6 md:p-8 space-y-4">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="nombre" class="block text-sm font-semibold text-gray-600 mb-1">Nombre</label>
+          <input type="text" id="nombre" value="Dylan" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+        </div>
+        <div>
+          <label for="apellido" class="block text-sm font-semibold text-gray-600 mb-1">Apellido</label>
+          <input type="text" id="apellido" value="Rodriguez" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+        </div>
+      </div>
+
+      <div>
+        <label for="correo" class="block text-sm font-semibold text-gray-600 mb-1">Correo Electrónico</label>
+        <input type="email" id="correo" value="dylan.rodriguez@example.com" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+      </div>
+
+      <div>
+          <label for="contrasena" class="block text-sm font-semibold text-gray-600 mb-1">Contraseña</label>
+          <div class="relative">
+              <input type="password" id="contrasena" value="************" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+              <button class="absolute inset-y-0 right-0 px-3 text-sm text-gray-600 hover:text-red-700">Cambiar</button>
+          </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="telefono" class="block text-sm font-semibold text-gray-600 mb-1">Teléfono</label>
+          <input type="tel" id="telefono" value="099 123 456" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+        </div>
+        <div>
+          <label for="cedula" class="block text-sm font-semibold text-gray-600 mb-1">Cédula</label>
+          <input type="text" id="cedula" value="5.123.456-7" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+        </div>
+      </div>
+
+      <div class="border-t border-gray-200 pt-4"></div>
+
+      <div class="flex justify-end space-x-4">
+        <button class="px-4 py-2 font-semibold text-gray-800 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors duration-200">
+          Descartar
+        </button>
+        <button class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
+          Guardar Cambios
+        </button>
+      </div>
+
+    </div>
+</div>
+

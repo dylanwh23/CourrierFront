@@ -1,21 +1,20 @@
-<div class="flex flex-row w-full h-full">
+<div class="flex flex-row w-full min-h-full">
     <div class="w-75">
         <div class="text-center py-2 border-red-700">
             <h1 class="text-xl">Dylan Rodriguez</h1>
         </div>
         <div>
-            <ul class="list-none p-0 m-0">
-                <li class="p-2 border-y-1 border-red-700 hover:bg-red-700 cursor-pointer">Mis Datos</li>
-                <li class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer">Órdenes</li>
-                <li class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer">Reclamos</li>
-                <li class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer">Help</li>
+            <ul class="list-none p-0 m-0 caret-transparent">
+                <li routerLink="misdatos" routerLinkActive="bg-red-700 text-white" class="p-2 border-y-1 border-red-700 hover:bg-red-700 cursor-pointer">Mis Datos</li>
+                <li routerLink="misordenes" routerLinkActive="bg-red-700 text-white" class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer">Órdenes</li>
+                <li routerLink="misreclamos" routerLinkActive="bg-red-700 text-white" class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer">Reclamos</li>
                 <li class="p-2 border-b-1 border-red-700 hover:bg-red-700 cursor-pointer" (click)="onLogout()">Logout</li>
             </ul>
         </div>
     </div>
+    
     <div class="flex-1 bg-red-700 flex items-center">
-        <div class="flex flex-col h-50 w-50 bg-white mx-auto ">
-       <app-ordenes-perfil></app-ordenes-perfil>
-        </div>
+        <router-outlet></router-outlet>
     </div>
+    
 </div>
