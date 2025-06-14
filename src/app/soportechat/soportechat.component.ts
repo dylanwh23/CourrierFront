@@ -1,13 +1,21 @@
-import { Component, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewChecked, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TicketService } from '../servicios/ticket.service';
+import { UsuarioService } from '../servicios/usuario.service';
 
 interface Ticket {
   id: number;
-  numero: string;
-  nombre: string;
-  email: string;
-  ultimaConsulta: string;
+  numero?: string;
+  nombre?: string;
+  email?: string;
+  ultimaConsulta?: string;
+  asunto?: string;
+  orden_id?: number;
+  estado?: string;
+  user_id?: number;
+  agente_id?: number;
+  agente_email?: string;
 }
 
 interface Mensaje {
@@ -22,13 +30,8 @@ interface Mensaje {
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
-export class SoportechatComponent implements AfterViewChecked {
-  tickets: Ticket[] = [
-    { id: 1, numero: '12345', nombre: 'Juan Pérez', email: 'juan.perez@email.com', ultimaConsulta: 'Estado de envío' },
-    { id: 2, numero: '12346', nombre: 'Ana Gómez', email: 'ana.gomez@email.com', ultimaConsulta: 'Costo de envío' },
-    // ...puedes agregar más tickets de ejemplo...
-  ];
-
+export class SoportechatComponent implements AfterViewChecked, OnInit {
+  tickets: Ticket[] = [];
   ticketSeleccionado: Ticket | null = null;
 
   // Mensajes por ticket
@@ -38,10 +41,44 @@ export class SoportechatComponent implements AfterViewChecked {
 
   escribiendoAgente = false;
 
+  usuarioTicket: any = null;
+
+  agenteNombre: string = '';
+  agenteApellido: string = '';
+
   @ViewChild('mensajesContainer') mensajesContainer!: ElementRef<HTMLDivElement>;
+
+  constructor(
+    private ticketService: TicketService,
+    private usuarioService: UsuarioService
+  ) {}
+
+  ngOnInit(): void {
+    // Llama al endpoint que lista los tickets del agente autenticado
+    this.ticketService.getMisTicketsAgente().subscribe({
+      next: (tickets) => {
+        this.tickets = tickets;
+      }
+    });
+    this.agenteNombre = localStorage.getItem('user_name') || '';
+    this.agenteApellido = localStorage.getItem('user_surname') || '';
+    document.title = `Soporte ChinaGO - ${this.agenteNombre} ${this.agenteApellido}`;
+  }
 
   seleccionarTicket(ticket: Ticket) {
     this.ticketSeleccionado = ticket;
+    // Consulta los datos del usuario del ticket
+    this.usuarioTicket = null;
+    if (ticket.user_id) {
+      this.usuarioService.consultarUsuarioPorIdSoloAgentes(ticket.user_id).subscribe({
+        next: (usuario) => {
+          this.usuarioTicket = usuario;
+        },
+        error: () => {
+          this.usuarioTicket = null;
+        }
+      });
+    }
     // Inicializa los mensajes si no existen para el ticket
     if (!this.mensajesPorTicket[ticket.id]) {
       this.mensajesPorTicket[ticket.id] = [

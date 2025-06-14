@@ -1,8 +1,8 @@
 export interface User {
   id: number;
-  nombre: string;
-  apellido: string;
+  name: string;
+  surname: string;
   email: string;
   cedula: string;
-  fechaNacimiento: string; 
+  fecha_nacimiento: string; 
 }

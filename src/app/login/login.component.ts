@@ -29,9 +29,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    // Handle login logic here
-    // Redirect to the home page or dashboard after successful login
-    // this.router.navigate(['/']);
     if (this.loginForm.valid) {
       const formData = this.loginForm.value;
       console.log(formData);
@@ -39,8 +36,20 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           this.mensaje = 'Inicio de sesión exitoso';
           console.log(res);
-          // Redirect to the home page or dashboard after successful login
-          this.router.navigate(['/']);
+          // Verifica si es agente y redirige según corresponda
+          this.usuarioService.esAgente().subscribe({
+            next: (resp) => {
+              if (resp.es_agente) {
+                this.router.navigate(['/soportechat']);
+              } else {
+                this.router.navigate(['/']);
+              }
+            },
+            error: () => {
+              // Si hay error en la verificación, redirige a home por defecto
+              this.router.navigate(['/']);
+            }
+          });
         },
         error: (err) => {
           if (err.status === 401) {

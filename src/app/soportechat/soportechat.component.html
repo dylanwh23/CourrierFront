@@ -17,26 +17,19 @@
     <aside class="w-72 bg-gray-100 border-r flex-shrink-0 h-full">
       <h2 class="text-lg font-bold p-4 border-b">Chats activos</h2>
       <ul>
-        <!-- Simulación de tickets, reemplaza por *ngFor="let ticket of tickets" en Angular real -->
         <li
           *ngFor="let ticket of tickets"
           (click)="seleccionarTicket(ticket)"
           [class.bg-red-100]="ticket.id === ticketSeleccionado?.id"
           class="cursor-pointer p-3 border-b hover:bg-red-50 flex flex-col"
         >
-          <span class="font-semibold text-red-700">#{{ ticket.numero }}</span>
-          <span class="text-gray-700">{{ ticket.nombre }}</span>
+          <span class="font-semibold text-red-700">Ticket #{{ ticket.id }}</span>
+          <span class="text-gray-700">Asunto: {{ ticket.asunto }}</span>
+          <span class="text-gray-500 text-xs">Orden: {{ ticket.orden_id }}</span>
+          <span class="text-gray-500 text-xs">Estado: {{ ticket.estado }}</span>
+          <span class="text-gray-500 text-xs">Cliente {{ ticket.user_id }}-{{ usuarioTicket?.name }} {{ usuarioTicket?.surname }}</span>
+          <span class="text-gray-500 text-xs">Agente: {{ ticket.agente_id }}-{{ agenteNombre }} {{ agenteApellido }}</span>
         </li>
-        <!-- Ejemplo estático si no tienes lógica Angular:
-        <li class="cursor-pointer p-3 border-b hover:bg-red-50 flex flex-col bg-red-100">
-          <span class="font-semibold text-red-700">#12345</span>
-          <span class="text-gray-700">Juan Pérez</span>
-        </li>
-        <li class="cursor-pointer p-3 border-b hover:bg-red-50 flex flex-col">
-          <span class="font-semibold text-red-700">#12346</span>
-          <span class="text-gray-700">Ana Gómez</span>
-        </li>
-        -->
       </ul>
     </aside>
     <!-- Chat del ticket seleccionado + info usuario a la derecha -->
@@ -94,21 +87,37 @@
           </div>
         </ng-template>
       </div>
+      
       <!-- Panel lateral con info del usuario a la derecha -->
       <div class="w-2/5 border-l-2 px-5 hidden lg:block h-full" *ngIf="ticketSeleccionado">
         <div class="flex flex-col">
           <div class="font-semibold text-xl py-4">Información del usuario</div>
-          <img src="https://ui-avatars.com/api/?name=Usuario&background=cccccc&color=222222" class="object-cover rounded-xl h-40 w-40 mx-auto mb-4" alt="Usuario" />
-          <div class="font-semibold">Nombre:</div>
-          <div class="mb-2">{{ ticketSeleccionado?.nombre }}</div>
-          <div class="font-semibold">Ticket:</div>
-          <div class="mb-2">#{{ ticketSeleccionado?.numero }}</div>
-          <div class="font-semibold">Email:</div>
-          <div class="mb-2">{{ ticketSeleccionado?.email }}</div>
-          <div class="font-semibold">Última consulta:</div>
-          <div class="mb-2">{{ ticketSeleccionado?.ultimaConsulta }}</div>
-          <div class="font-light mt-4 text-gray-500 text-sm">
-            Este chat fue derivado automáticamente por el bot. Puedes continuar la atención personalizada aquí.
+          <img 
+            [src]="'https://ui-avatars.com/api/?name=' + (usuarioTicket?.name || '') + '+' + (usuarioTicket?.surname || '') + '&background=cccccc&color=222222'" 
+            class="object-cover rounded-xl h-40 w-40 mx-auto mb-4" 
+            alt="Usuario" 
+          />
+          <ng-container *ngIf="usuarioTicket; else cargandoUsuario">
+            <div class="font-semibold">Nombre:</div>
+            <div class="mb-2">{{ usuarioTicket?.name }} {{ usuarioTicket?.surname }}</div>
+            <div class="font-semibold">Email:</div>
+            <div class="mb-2">{{ usuarioTicket?.email }}</div>
+            <div class="font-semibold">Cédula:</div>
+            <div class="mb-2">{{ usuarioTicket?.cedula }}</div>
+            <div class="font-semibold">Fecha de nacimiento:</div>
+            <div class="mb-2">{{ usuarioTicket?.fecha_nacimiento }}</div>
+          </ng-container>
+          <ng-template #cargandoUsuario>
+            <div class="text-gray-400">Cargando datos de usuario...</div>
+          </ng-template>
+          <!-- Información del ticket -->
+          <div class="flex flex-col">
+            <div class="font-semibold text-xl py-4">Información del ticket</div>
+            <div class="mb-2"><span class="font-semibold">ID:</span> {{ ticketSeleccionado?.id }}</div>
+            <div class="mb-2"><span class="font-semibold">Orden:</span> {{ ticketSeleccionado?.orden_id }}</div>
+            <div class="mb-2"><span class="font-semibold">Asunto:</span> {{ ticketSeleccionado?.asunto }}</div>
+            <div class="mb-2"><span class="font-semibold">Estado:</span> {{ ticketSeleccionado?.estado }}</div>
+            <div class="mb-2"><span class="font-semibold">Email agente:</span> {{ ticketSeleccionado?.agente_email || '' }}</div>
           </div>
         </div>
       </div>
@@ -117,13 +126,4 @@
 </div>
 
 <!-- Animaciones para los mensajes -->
-<style>
-.mensaje-fade-in {
-  animation: mensajeFadeIn 0.3s cubic-bezier(0.4,0,0.2,1);
-  animation-fill-mode: both;
-}
-@keyframes mensajeFadeIn {
-  from { opacity: 0; transform: translateY(20px);}
-  to { opacity: 1; transform: translateY(0);}
-}
-</style>
+
