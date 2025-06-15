@@ -1,8 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-calculadora',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './calculadora.component.html',
   styleUrl: './calculadora.component.css'
 })
