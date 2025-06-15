@@ -15,7 +15,8 @@
   <div class="fixed inset-0 z-50 bg-white flex flex-row">
     <!-- Lista de tickets activos -->
     <aside class="w-72 bg-gray-100 border-r flex-shrink-0 h-full">
-      <h2 class="text-lg font-bold p-4 border-b">Chats activos</h2>
+        <a routerLink="/soporte" class="text-center bg-red-700 text-white font-semibold py-2 rounded hover:bg-red-800 transition">Inicio</a>
+  <h2 class="text-lg font-bold border-b pb-2 text-center">Chats activos</h2>
       <ul>
         <li
           *ngFor="let ticket of tickets"

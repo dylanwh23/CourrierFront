@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TicketService } from '../servicios/ticket.service';
 import { UsuarioService } from '../servicios/usuario.service';
+import { RouterLink } from '@angular/router';
 
 interface Ticket {
   id: number;
@@ -28,7 +29,7 @@ interface Mensaje {
   templateUrl: './soportechat.component.html',
   styleUrls: ['./soportechat.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, RouterLink]
 })
 export class SoportechatComponent implements AfterViewChecked, OnInit {
   tickets: Ticket[] = [];
