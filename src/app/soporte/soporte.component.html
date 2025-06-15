@@ -1,13 +1,13 @@
 <!-- soporte.component.html -->
 
 <div class="bg-red-900 text-white min-h-full">
-  <!-- Header -->
-  <header class="border-b-2 border-gray-300 mb-8 pb-4">
+
+  <div class="border-b-2 border-gray-300 mb-8 pb-4">
     <h1 class="text-3xl md:text-5xl font-bold text-center pt-6">SOPORTE</h1>
     <p class="text-center text-lg md:text-xl text-white/90 mt-2">
       Si tienes alguna duda o problema, estamos aquí para ayudarte.
     </p>
-  </header>
+  </div>
 
   <!-- Contenedor principal -->
   <div class="max-w-5xl mx-auto px-4">
@@ -152,7 +152,7 @@
             <label class="block text-red-700 font-medium mb-1">Nombre</label>
             <input formControlName="name" type="text"
               class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-600" />
-            <p *ngIf="form.controls.name.invalid && form.controls.name.touched" class="text-red-600 text-sm mt-1">
+            <p *ngIf="form.controls['name'].invalid && form.controls['name'].touched" class="text-red-600 text-sm mt-1">
               Nombre requerido.
             </p>
           </div>
@@ -162,7 +162,7 @@
             <label class="block text-red-700 font-medium mb-1">Correo</label>
             <input formControlName="email" type="email"
               class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-600" />
-            <p *ngIf="form.controls.email.invalid && form.controls.email.touched" class="text-red-600 text-sm mt-1">
+            <p *ngIf="form.controls['email'].invalid && form.controls['email'].touched" class="text-red-600 text-sm mt-1">
               Email inválido.
             </p>
           </div>
@@ -172,7 +172,7 @@
             <label class="block text-red-700 font-medium mb-1">Mensaje</label>
             <textarea formControlName="message" rows="5"
               class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-600"></textarea>
-            <p *ngIf="form.controls.message.invalid && form.controls.message.touched" class="text-red-600 text-sm mt-1">
+            <p *ngIf="form.controls['message'].invalid && form.controls['message'].touched" class="text-red-600 text-sm mt-1">
               Mensaje requerido.
             </p>
           </div>
@@ -186,6 +186,10 @@
             <p *ngIf="errorMsg" class="text-red-700 text-sm mt-2">
               {{ errorMsg }}
             </p>
+            <p *ngIf="successMsg" class="text-green-700 text-sm mt-2">
+              {{ successMsg }}
+            </p>
+
           </div>
 
         </form>

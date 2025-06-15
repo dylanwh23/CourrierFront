@@ -7,12 +7,14 @@ import { CommonModule } from '@angular/common';
   selector: 'app-support',
   templateUrl: './soporte.component.html',
   styleUrls: ['./soporte.component.css'],
-  imports: [ReactiveFormsModule] 
+  imports: [ReactiveFormsModule, CommonModule] 
 })
 export class SoporteComponent implements OnInit {
   form!: FormGroup;
   submitting = false;
   errorMsg = '';
+  successMsg = '';
+  
 
   constructor(
     private fb: FormBuilder,
@@ -28,26 +30,29 @@ export class SoporteComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitting = true;
-    this.errorMsg = '';
+  this.submitting = true;
+  this.errorMsg = '';
+  this.successMsg = '';
 
-    if (this.form.invalid) {
-      this.submitting = false;
-      return;
-    }
-
-    const payload: SupportRequest = this.form.value;
-    this.supportService.send(payload).subscribe({
-      next: res => {
-        alert(res.message);        // “Consulta recibida. Revisa tu correo…”
-        this.form.reset();
-        this.submitting = false;
-      },
-      error: err => {
-        console.error(err);
-        this.errorMsg = 'Hubo un error enviando tu mensaje.';
-        this.submitting = false;
-      }
-    });
+  if (this.form.invalid) {
+    this.submitting = false;
+    return;
   }
+
+  const payload: SupportRequest = this.form.value;
+  this.supportService.send(payload).subscribe({
+    next: res => {
+      console.log('RESPUESTA DEL BACKEND:', res);
+      this.successMsg = res.message; // "Consulta recibida. Revisa tu correo…"
+      this.form.reset();
+      this.submitting = false;
+    },
+    error: err => {
+      console.error(err);
+      this.errorMsg = 'Hubo un error enviando tu mensaje.';
+      this.submitting = false;
+    }
+  });
+}
+
 }
