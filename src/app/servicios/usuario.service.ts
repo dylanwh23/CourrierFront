@@ -9,9 +9,9 @@ export interface RegisterData {
   correo: string; // Si tu backend espera 'correo' para registrar
   pass: string;
   cedula: string;
-  fechaNacimiento: string;
-  nombre: string;
-  apellido: string;
+  fecha_nacimiento: string;
+  name: string;
+  surname: string;
 }
 
 export interface LoginData {
@@ -98,16 +98,36 @@ export class UsuarioService {
           // Cuando el logout es exitoso, actualizamos el BehaviorSubject a null
           this.currentUserSubject.next(null);
           console.log('Usuario deslogueado');
-          // Opcional: Limpiar localStorage
+          this.clearUserFromLocalStorage();
           // localStorage.removeItem('currentUser');
         }),
         catchError((error) => {
           // Incluso si el logout falla, es buena idea limpiar el estado del cliente
           this.currentUserSubject.next(null);
-          // localStorage.removeItem('currentUser');
+          this.clearUserFromLocalStorage();
           return throwError(() => error);
         })
       );
+  }
+
+  private saveUserToLocalStorage(user: User) {
+    localStorage.setItem('user_id', String(user.id ?? ''));
+    localStorage.setItem('user_name', user.name ?? '');
+    localStorage.setItem('user_surname', user.surname ?? '');
+    localStorage.setItem('user_email', user.email ?? '');
+    localStorage.setItem('user_cedula', user.cedula ?? '');
+    localStorage.setItem('user_fecha_nacimiento', user.fecha_nacimiento ?? '');
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  private clearUserFromLocalStorage() {
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('user_surname');
+    localStorage.removeItem('user_email');
+    localStorage.removeItem('user_cedula');
+    localStorage.removeItem('user_fecha_nacimiento');
+    localStorage.removeItem('currentUser');
   }
 
   // Nuevo método para obtener el usuario actual del backend
@@ -117,17 +137,29 @@ export class UsuarioService {
       .pipe(
         tap((user) => {
           this.currentUserSubject.next(user);
-          // localStorage.setItem('currentUser', JSON.stringify(user));
+          this.saveUserToLocalStorage(user);
         }),
         catchError((error) => {
-          // Si hay un error (ej. 401 No Autenticado), significa que no hay sesión válida
           this.currentUserSubject.next(null);
-          // localStorage.removeItem('currentUser');
-          // No relanzamos el error si es un 401/403 esperado al chequear,
-          // simplemente devolvemos null o un observable de null.
-          // Si quieres propagar el error para otros manejos, usa throwError.
+          this.clearUserFromLocalStorage();
           return new Observable<null>((observer) => observer.next(null));
         })
       );
+  }
+
+  // Consulta al backend si el usuario autenticado es agente
+  esAgente(): Observable<{ es_agente: boolean, estado?: string }> {
+    return this.http.get<{ es_agente: boolean, estado?: string }>(
+      `${this.apiUrl}/esAgente`,
+      { withCredentials: true }
+    );
+  }
+
+  // Consulta los datos de un usuario por ID solo si es agente
+  consultarUsuarioPorIdSoloAgentes(id: number): Observable<User> {
+    return this.http.get<User>(
+      `${this.apiUrl}/consultarUsuarioPorId/${id}`,
+      { withCredentials: true }
+    );
   }
 }

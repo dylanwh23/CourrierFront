@@ -1,39 +1,54 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-calculadora',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './calculadora.component.html',
   styleUrl: './calculadora.component.css'
 })
 export class CalculadoraComponent {
- resultado: number | null = null;
+  resultado: number | null = null;
+  tarifaSugerida: string = '';
 
-  calcularCosto(tipo: string, depto: string, peso: string) {
-    let tipoValor = 0;
-    let deptoValor = 0;
+  departamentos: string[] = [
+    'Artigas', 'Canelones', 'Cerro Largo', 'Colonia', 'Durazno',
+    'Flores', 'Florida', 'Lavalleja', 'Maldonado', 'Montevideo',
+    'Paysandú', 'Río Negro', 'Rivera', 'Rocha', 'Salto',
+    'San José', 'Soriano', 'Tacuarembó', 'Treinta y Tres'
+  ];
 
-    switch (tipo) {
-      case 'Documento':
-        tipoValor = 1;
-        break;
-      case 'Paquete pequeño':
-        tipoValor = 2;
-        break;
-      case 'Paquete mediano':
-        tipoValor = 3;
-        break;
-      case 'Paquete grande':
-        tipoValor = 4;
-        break;
+  calcularCosto(tipo: string, depto: string, pesoInput: string): void {
+    const peso = parseFloat(pesoInput);
+
+    if (!peso || peso <= 0) {
+      this.resultado = null;
+      this.tarifaSugerida = '';
+      return;
     }
 
-    if (depto === 'Montevideo' || depto === 'Canelones') {
-      deptoValor = 1;
+    let costoPorKg = 0;
+
+    if (peso <= 0.9) {
+      costoPorKg = 21.90;
+      this.tarifaSugerida = 'Envío pequeño';
+    } else if (peso <= 5) {
+      costoPorKg = 21.90;
+      this.tarifaSugerida = 'Envío pequeño';
+    } else if (peso <= 20) {
+      costoPorKg = 16.50;
+      this.tarifaSugerida = 'Envío regular';
+    } else if (peso <= 40) {
+      costoPorKg = 13.20;
+      this.tarifaSugerida = 'Tarifa Extra';
     } else {
-      deptoValor = 3;
+      this.tarifaSugerida = 'Cotizar tarifa personalizada';
+      this.resultado = null;
+      return;
     }
 
-    this.resultado = tipoValor + deptoValor;
+    this.resultado = peso * costoPorKg;
   }
 }

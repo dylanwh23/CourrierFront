@@ -5,10 +5,11 @@ import { ChatbotComponent } from '../app/chatbot/chatbot.component';
 import { NgIf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router'; // Importa ActivatedRoute
 import { EmailVerifiedComponent } from './email-verified/email-verified.component';
+import { FooterComponent } from './footer/footer.component';  
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavComponent, ChatbotComponent, NgIf, EmailVerifiedComponent],
+  imports: [RouterOutlet, NavComponent,ChatbotComponent, FooterComponent, NgIf, EmailVerifiedComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

@@ -11,6 +11,7 @@ import { MisDatosComponent } from './profile/profileSecciones/mis-datos/mis-dato
 import { MisOrdenesComponent } from './profile/profileSecciones/mis-ordenes/mis-ordenes.component';
 import { MisReclamosComponent } from './profile/profileSecciones/mis-reclamos/mis-reclamos.component';
 import { EmailVerifiedComponent } from './email-verified/email-verified.component';
+import { SoportechatComponent } from './soportechat/soportechat.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,8 +22,8 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'email_verified', component: EmailVerifiedComponent },
-
-  {
+  { path: 'soportechat', component: SoportechatComponent },
+   {
     path: 'profile',
     component: ProfileComponent,
     children: [
@@ -31,4 +32,5 @@ export const routes: Routes = [
       { path: 'misreclamos', component: MisReclamosComponent }
     ]
   }
+
 ];
