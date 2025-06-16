@@ -19,7 +19,7 @@
         <select
           #tipo
           required
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-700 focus:outline-none"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-700 focus:outline-none text-black"
         >
           <option disabled selected value="">Seleccione un tipo</option>
           <option>Envio pequeño</option>
@@ -34,7 +34,7 @@
         <select
           #departamento
           required
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-700 focus:outline-none"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-700 focus:outline-none text-black"
         >
           <option disabled selected value="">Seleccione un departamento</option>
           <option *ngFor="let dep of departamentos">{{ dep }}</option>
@@ -50,7 +50,7 @@
           step="0.1"
           min="0"
           placeholder="Ej: 2.5"
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-700 focus:outline-none"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-700 focus:outline-none text-black"
         />
       </div>
 
@@ -75,6 +75,49 @@
       </div>
     </form>
 
+<!-- Tabla de tarifas por departamento -->
+<div class="max-w-md mx-auto mt-10 text-sm text-gray-700 text-center">
+  <h3 class="font-bold mb-2 text-gray-900">Tarifa adicional por departamento:</h3>
+  <table class="w-full text-left border border-gray-300 text-gray-800 text-sm">
+    <thead class="bg-red-100 text-red-800">
+      <tr>
+        <th class="px-3 py-2 border-b border-gray-300">Departamento</th>
+        <th class="px-3 py-2 border-b border-gray-300">Recargo (USD)</th>
+      </tr>
+    </thead>
+    <tbody class="bg-gray-50">
+      <tr>
+        <td class="px-3 py-1 border-b border-gray-200">Montevideo</td>
+        <td class="px-3 py-1 border-b border-gray-200">$0</td>
+      </tr>
+      <tr>
+        <td class="px-3 py-1 border-b border-gray-200">Canelones</td>
+        <td class="px-3 py-1 border-b border-gray-200">$2</td>
+      </tr>
+      <tr>
+        <td class="px-3 py-1 border-b border-gray-200">Maldonado</td>
+        <td class="px-3 py-1 border-b border-gray-200">$5</td>
+      </tr>
+      <tr>
+        <td class="px-3 py-1 border-b border-gray-200">San José</td>
+        <td class="px-3 py-1 border-b border-gray-200">$5</td>
+      </tr>
+      <tr>
+        <td class="px-3 py-1 border-b border-gray-200">Resto de departamentos</td>
+        <td class="px-3 py-1 border-b border-gray-200">$8</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- Ayuda -->
+<div class="mt-6 text-center">
+  ...
+</div>
+
+
+    
     <!-- Ayuda -->
     <div class="mt-6 text-center">
       <a routerLink="/soporte" class="text-sm cursor-pointer text-blue-600 hover:underline">
