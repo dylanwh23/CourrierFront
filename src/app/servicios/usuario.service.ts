@@ -1,5 +1,7 @@
 // src/app/usuario.service.ts (o como lo hayas llamado)
 import { Injectable, inject } from '@angular/core';
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs'; // Importa BehaviorSubject
 import { tap, catchError, switchMap, map } from 'rxjs/operators'; // Importa map
@@ -35,7 +37,7 @@ export class UsuarioService {
     map((user) => !!user)
   );
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     // Opcional: Intenta cargar el usuario al iniciar el servicio
     // Esto es útil si el usuario ya tiene una sesión activa en el backend
     // y recarga la página.
@@ -111,23 +113,28 @@ export class UsuarioService {
   }
 
   private saveUserToLocalStorage(user: User) {
-    localStorage.setItem('user_id', String(user.id ?? ''));
-    localStorage.setItem('user_name', user.name ?? '');
-    localStorage.setItem('user_surname', user.surname ?? '');
-    localStorage.setItem('user_email', user.email ?? '');
-    localStorage.setItem('user_cedula', user.cedula ?? '');
-    localStorage.setItem('user_fecha_nacimiento', user.fecha_nacimiento ?? '');
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('user_id', String(user.id ?? ''));
+      localStorage.setItem('user_name', user.name ?? '');
+      localStorage.setItem('user_surname', user.surname ?? '');
+      localStorage.setItem('user_email', user.email ?? '');
+      localStorage.setItem('user_cedula', user.cedula ?? '');
+      localStorage.setItem('user_fecha_nacimiento', user.fecha_nacimiento ?? '');
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    }
   }
 
   private clearUserFromLocalStorage() {
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('user_name');
-    localStorage.removeItem('user_surname');
-    localStorage.removeItem('user_email');
-    localStorage.removeItem('user_cedula');
-    localStorage.removeItem('user_fecha_nacimiento');
-    localStorage.removeItem('currentUser');
+    if (isPlatformBrowser(this.platformId)) {
+
+      localStorage.removeItem('user_id');
+      localStorage.removeItem('user_name');
+      localStorage.removeItem('user_surname');
+      localStorage.removeItem('user_email');
+      localStorage.removeItem('user_cedula');
+      localStorage.removeItem('user_fecha_nacimiento');
+      localStorage.removeItem('currentUser');
+    }
   }
 
   // Nuevo método para obtener el usuario actual del backend

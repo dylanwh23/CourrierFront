@@ -27,8 +27,14 @@
           <span class="text-gray-700">Asunto: {{ ticket.asunto }}</span>
           <span class="text-gray-500 text-xs">Orden: {{ ticket.orden_id }}</span>
           <span class="text-gray-500 text-xs">Estado: {{ ticket.estado }}</span>
-          <span class="text-gray-500 text-xs">Cliente {{ ticket.user_id }}-{{ usuarioTicket?.name }} {{ usuarioTicket?.surname }}</span>
-          <span class="text-gray-500 text-xs">Agente: {{ ticket.agente_id }}-{{ agenteNombre }} {{ agenteApellido }}</span>
+          <ng-container *ngIf="ticket.user_id === userId; else agentePrimero">
+            <span class="text-gray-500 text-xs">Agente: {{ ticket.agente_id }}-{{ agenteNombre }} {{ agenteApellido }}</span>
+            <span class="text-gray-500 text-xs">Cliente {{ ticket.user_id }}</span>
+          </ng-container>
+          <ng-template #agentePrimero>
+            <span class="text-gray-500 text-xs">Cliente {{ ticket.user_id }}</span>
+            <span class="text-gray-500 text-xs">Agente: {{ ticket.agente_id }}-{{ agenteNombre }} {{ agenteApellido }}</span>
+          </ng-template>
         </li>
       </ul>
     </aside>
@@ -91,7 +97,15 @@
       <!-- Panel lateral con info del usuario a la derecha -->
       <div class="w-2/5 border-l-2 px-5 hidden lg:block h-full" *ngIf="ticketSeleccionado">
         <div class="flex flex-col">
-          <div class="font-semibold text-xl py-4">Información del usuario</div>
+          <div class="font-semibold text-xl py-4">
+            <!-- Cambia el título según si el usuario autenticado es cliente o agente -->
+            <ng-container *ngIf="ticketSeleccionado?.user_id === userId; else infoUsuario">
+              Información del agente
+            </ng-container>
+            <ng-template #infoUsuario>
+              Información del usuario
+            </ng-template>
+          </div>
           <img 
             [src]="'https://ui-avatars.com/api/?name=' + (usuarioTicket?.name || '') + '+' + (usuarioTicket?.surname || '') + '&background=cccccc&color=222222'" 
             class="object-cover rounded-xl h-40 w-40 mx-auto mb-4" 
