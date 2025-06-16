@@ -1,13 +1,13 @@
 <!-- soporte.component.html -->
 
 <div class="bg-red-900 text-white min-h-full">
-  <!-- Header -->
-  <header class="border-b-2 border-gray-300 mb-8 pb-4">
-    <h1 class="text-3xl md:text-5xl font-bold text-center pt-6">SOPORTE</h1>
+
+  <div class="border-b-2 border-gray-300 mb-8 pb-4 shadow-xl">
+    <h1 class="text-3xl md:text-5xl font-bold text-center pt-6 drop-shadow-lg">SOPORTE</h1>
     <p class="text-center text-lg md:text-xl text-white/90 mt-2">
       Si tienes alguna duda o problema, estamos aquí para ayudarte.
     </p>
-  </header>
+  </div>
 
   <!-- Contenedor principal -->
   <div class="max-w-5xl mx-auto px-4">
@@ -80,21 +80,24 @@
 
       <!-- 5 -->
       <li>
-        <details class="border border-gray-300 rounded-lg bg-white/10 [&_summary::-webkit-details-marker]:hidden">
-          <summary class="cursor-pointer p-4 text-white font-medium hover:bg-white/20 transition-colors rounded-t-lg">
-            ¿Qué métodos de pago aceptan?
-          </summary>
-          <div class="px-4 pb-4 text-gray-200">
-            Aceptamos:
-            <ul class="list-disc list-inside mt-2 text-gray-200">
-              <li>Tarjetas de crédito y débito (Visa, MasterCard, American Express).</li>
-              <li>PayPal.</li>
-              <li>Transferencia bancaria (solo para pedidos mayores a $100 USD).</li>
-            </ul>
-            Si necesitas otra modalidad, contáctanos para evaluar opciones.
-          </div>
-        </details>
-      </li>
+  <details class="border border-gray-300 rounded-lg bg-white/10 [&_summary::-webkit-details-marker]:hidden">
+    <summary class="cursor-pointer p-4 text-white font-medium hover:bg-white/20 transition-colors rounded-t-lg">
+      ¿Cómo puedo saber el costo de mi pedido?
+    </summary>
+    <div class="px-4 pb-4 text-gray-200 space-y-2">
+      <p>
+        Podés estimar fácilmente el costo de tu pedido usando nuestra
+        <a routerLink="/calculadora" class="text-blue-400 hover:underline">calculadora en línea</a>.
+        Solo necesitás indicar el tipo de paquete, destino y peso.
+      </p>
+      <p>
+        Si preferís revisar todas las tarifas disponibles, consultá nuestra
+        <a routerLink="/tarifas" class="text-blue-400 hover:underline">tabla de tarifas</a>.
+      </p>
+    </div>
+  </details>
+</li>
+
 
       <!-- 6 -->
       <li>
@@ -135,7 +138,6 @@
     </ul>
 
 
-    <!-- Llamado a contacto -->
     <div class="pt-6 pb-16">
       <p class="text-gray-300 text-base mb-4 text-center">
         Si tienes más preguntas o necesitas ayuda personalizada, no dudes en contactarnos a través de nuestro formulario
@@ -143,7 +145,7 @@
       </p>
 
       <!-- Formulario de contacto -->
-      <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg mt-8 text-black">
+      <div id="formularioSoporte" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg mt-8 text-black">
         <h2 class="text-2xl font-bold text-center text-red-700 mb-6">Contáctanos</h2>
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-1 gap-4">
 
@@ -152,7 +154,7 @@
             <label class="block text-red-700 font-medium mb-1">Nombre</label>
             <input formControlName="name" type="text"
               class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-600" />
-            <p *ngIf="form.controls.name.invalid && form.controls.name.touched" class="text-red-600 text-sm mt-1">
+            <p *ngIf="form.controls['name'].invalid && form.controls['name'].touched" class="text-red-600 text-sm mt-1">
               Nombre requerido.
             </p>
           </div>
@@ -162,7 +164,7 @@
             <label class="block text-red-700 font-medium mb-1">Correo</label>
             <input formControlName="email" type="email"
               class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-600" />
-            <p *ngIf="form.controls.email.invalid && form.controls.email.touched" class="text-red-600 text-sm mt-1">
+            <p *ngIf="form.controls['email'].invalid && form.controls['email'].touched" class="text-red-600 text-sm mt-1">
               Email inválido.
             </p>
           </div>
@@ -172,7 +174,7 @@
             <label class="block text-red-700 font-medium mb-1">Mensaje</label>
             <textarea formControlName="message" rows="5"
               class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-red-600"></textarea>
-            <p *ngIf="form.controls.message.invalid && form.controls.message.touched" class="text-red-600 text-sm mt-1">
+            <p *ngIf="form.controls['message'].invalid && form.controls['message'].touched" class="text-red-600 text-sm mt-1">
               Mensaje requerido.
             </p>
           </div>
@@ -186,6 +188,10 @@
             <p *ngIf="errorMsg" class="text-red-700 text-sm mt-2">
               {{ errorMsg }}
             </p>
+            <p *ngIf="successMsg" class="text-green-700 text-sm mt-2">
+              {{ successMsg }}
+            </p>
+
           </div>
 
         </form>

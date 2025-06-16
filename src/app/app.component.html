@@ -1,9 +1,9 @@
-<div class="flex flex-col h-dvh bg-gray-200">
-
+<div class="flex flex-col h-dvh bg-gray-200 static">
   <app-nav></app-nav>
   <app-chatbot></app-chatbot>
-
+  <app-email-verified *ngIf="mostrarSuccessAlert"></app-email-verified>
   <main class="flex-grow overflow-y-auto">
+
     
     <router-outlet></router-outlet>
     
