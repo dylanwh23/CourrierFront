@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { MisDatosComponent } from './profile/profileSecciones/mis-datos/mis-datos.component';
 import { MisOrdenesComponent } from './profile/profileSecciones/mis-ordenes/mis-ordenes.component';
 import { MisReclamosComponent } from './profile/profileSecciones/mis-reclamos/mis-reclamos.component';
+import { EmailVerifiedComponent } from './email-verified/email-verified.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +20,8 @@ export const routes: Routes = [
   { path: 'aboutus', component: AboutusComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'email_verified', component: EmailVerifiedComponent },
+
   {
     path: 'profile',
     component: ProfileComponent,

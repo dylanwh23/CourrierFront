@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SupportService, SupportRequest } from '../servicios/soporte.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 @Component({
   selector: 'app-support',
   templateUrl: './soporte.component.html',
   styleUrls: ['./soporte.component.css'],
-  imports: [ReactiveFormsModule] 
+  imports: [ReactiveFormsModule, NgIf] 
 })
 export class SoporteComponent implements OnInit {
   form!: FormGroup;

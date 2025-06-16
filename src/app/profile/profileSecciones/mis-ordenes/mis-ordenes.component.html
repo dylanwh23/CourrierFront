@@ -1,48 +1,398 @@
-<div class="flex flex-col h-fit">
-    <div class="bg-red-700 p-5">
-        <h2 class="text-2xl font-bold text-white text-center tracking-wide">
-            Mis Órdenes
-        </h2>
+<div class="flex flex-col font-sans items-center">
+  <div class="bg-red-600 shadow-md w-full">
+    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-white text-center tracking-wide">
+        Mis Órdenes
+      </h1>
     </div>
-    <div class="p-5">
-        <table class="min-w-full border-collapse">
-            <thead>
-                <tr>
-                    <th class="border px-4 py-2">ID</th>
-                    <th class="border px-4 py-2">Estado de Envío</th>
-                    <th class="border px-4 py-2">Fecha</th>
-                    <th class="border px-4 py-2">Tracking ID</th>
-                    <th class="border px-4 py-2">Valor Declarado ($)</th>
-                    <th class="border px-4 py-2">Peso</th>
-                    <th class="border px-4 py-2">Cantidad de Piezas</th>
-                    <th class="border px-4 py-2">Remitente</th>
-                    <th class="border px-4 py-2">Descripción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="border px-4 py-2">1</td>
-                    <td class="border px-4 py-2">En camino</td>
-                    <td class="border px-4 py-2">2023-10-01</td>
-                    <td class="border px-4 py-2">TRK1234567</td>
-                    <td class="border px-4 py-2">500</td>
-                    <td class="border px-4 py-2">2kg</td>
-                    <td class="border px-4 py-2">3</td>
-                    <td class="border px-4 py-2">Empresa A</td>
-                    <td class="border px-4 py-2">MOTHERBOARD</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">2</td>
-                    <td class="border px-4 py-2">Entregado</td>
-                    <td class="border px-4 py-2">2023-09-28</td>
-                    <td class="border px-4 py-2">TRK7654321</td>
-                    <td class="border px-4 py-2">750</td>
-                    <td class="border px-4 py-2">5kg</td>
-                    <td class="border px-4 py-2">1</td>
-                    <td class="border px-4 py-2">Empresa B</td>
-                    <td class="border px-4 py-2">AURICULARES, CELULAR</td>
-                </tr>
-            </tbody>
-        </table>
+  </div>
+
+  <div class="py-10 px-4 sm:px-6 lg:px-8 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-xl shadow-lg p-8 h-full">
+          <h2 class="text-3xl font-bold text-slate-800 mb-6 border-b pb-4">
+            Tu dirección de casilla
+          </h2>
+          <ul class="space-y-4 text-lg text-slate-600">
+            <li class="flex items-start">
+              <strong class="w-32 shrink-0 text-slate-800">Nombre:</strong>
+              <span>Dylan Rodriguez</span>
+            </li>
+            <li class="flex items-start">
+              <strong class="w-32 shrink-0 text-slate-800">Dirección:</strong>
+              <span>100 Chang'an Avenue</span>
+            </li>
+            <li class="flex items-start">
+              <strong class="w-32 shrink-0 text-slate-800">Referencia:</strong>
+              <span>UNIT A-203007 USER{{ this.user_id }}</span>
+            </li>
+            <li class="flex items-start">
+              <strong class="w-32 shrink-0 text-slate-800">Ciudad:</strong>
+              <span>Beijing</span>
+            </li>
+            <li class="flex items-start">
+              <strong class="w-32 shrink-0 text-slate-800">Estado:</strong>
+              <span>Beijing</span>
+            </li>
+            <li class="flex items-start">
+              <strong class="w-32 shrink-0 text-slate-800">ZIP:</strong>
+              <span>100000</span>
+            </li>
+            <li class="flex items-start">
+              <strong class="w-32 shrink-0 text-slate-800">País:</strong>
+              <span>China</span>
+            </li>
+            <li class="flex items-start">
+              <strong class="w-32 shrink-0 text-slate-800">Teléfono:</strong>
+              <span>+86 10 8888 8888</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-red-600"
+                >* Esta dirección deberá ser asignada en tu compra online.</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lg:col-span-1">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold text-slate-800">Tus órdenes:</h2>
+          <a
+            (click)="isModalOpen = true"
+            class="cursor-pointer flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span>Nueva Orden</span>
+          </a>
+
+          <div
+            *ngIf="isModalOpen"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          >
+            <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+              <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-xl font-semibold">Crear Orden</h3>
+                <button
+                  (click)="isModalOpen = false"
+                  class="text-gray-600 hover:text-gray-800 text-3xl leading-none"
+                >
+                  &times;
+                </button>
+              </div>
+              <form
+                class="mt-4"
+                (ngSubmit)="altaOrden()"
+                [formGroup]="ordenForm"
+              >
+                <div class="mb-4">
+                  <label class="block text-sm font-medium text-gray-700"
+                    >Provedor</label
+                  >
+                  <input
+                    formControlName="proveedor"
+                    type="text"
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    placeholder="Ej:AliExpress, Taobao, Tmall..."
+                    required
+                  />
+                </div>
+                <div class="mb-4">
+                  <label class="block text-sm font-medium text-gray-700"
+                    >Valor en dólares del/los productos, con taxes y envío
+                    interno incluído:</label
+                  >
+                  <input
+                    formControlName="valor_declarado"
+                    type="number"
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    placeholder="Ej:100"
+                    required
+                  />
+                </div>
+                <div class="mb-4">
+                  <label class="block text-sm font-medium text-gray-700"
+                    >Descripción</label
+                  >
+                  <textarea
+                    formControlName="descripcion"
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    placeholder="Descripcion del/los productos a recibr"
+                    required
+                  ></textarea>
+                </div>
+                <div class="mb-4">
+                  <label class="block text-sm font-medium text-gray-700"
+                    >Adjuntar comprobante/s de pago</label
+                  >
+                  <input
+                    formControlName="imagen_factura"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    required
+                  />
+                </div>
+                <div class="flex justify-end">
+                  <button
+                    type="button"
+                    (click)="isModalOpen = false"
+                    class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg mr-2"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg"
+                  >
+                    Crear Orden
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <ul class="space-y-6">
+          <li *ngFor="let orden of ordenes" class="group">
+            <details
+              class="group bg-white shadow-lg rounded-xl overflow-hidden"
+            >
+              <summary
+                class="flex justify-between items-center p-8 cursor-pointer hover:bg-slate-50 transition-colors"
+              >
+                <div>
+                  <h3 class="text-2xl font-bold text-slate-800">
+                    #{{ orden.id }}
+                  </h3>
+                  <p class="text-base text-slate-500 mt-2">
+                    <strong>Total:</strong> ${{ orden.valor_total }}
+                  </p>
+                  <p class="text-base text-slate-500">
+                    <strong>Última Actualización:</strong>
+                    {{ orden.ultima_fecha_actualizacion_estado }}
+                  </p>
+                  <p class="text-base text-slate-400 mt-2">
+                    Tracking ID: {{ orden.tracking_id }}
+                  </p>
+                </div>
+                <div class="flex flex-col items-center space-y-3">
+                  <span
+                    class="px-4 py-1.5 text-base font-medium bg-gray-200 text-gray-800 rounded-full"
+                    *ngIf="orden.status === 'En espera'"
+                  >
+                    En espera
+                  </span>
+                  <span
+                    (click)="confirmarEnvioOrden(orden.id)"
+                    class="px-4 py-1.5 text-base font-medium bg-indigo-200 text-indigo-800 rounded-full cursor-pointer"
+                    *ngIf="orden.status === 'Compras arribadas'"
+                  >
+                    Enviar paquete a Uruguay
+                  </span>
+                  <span
+                    class="px-4 py-1.5 text-base font-medium bg-purple-100 text-purple-900 rounded-full"
+                    *ngIf="orden.status === 'En viaje'"
+                  >
+                    En viaje
+                  </span>
+                  <span
+                    class="px-4 py-1.5 text-base font-medium bg-green-500 text-white rounded-full"
+                    *ngIf="orden.status === 'Arribado'"
+                  >
+                    Arribado
+                  </span>
+                  <svg
+                    class="w-6 h-6 text-slate-500 transform transition-transform group-open:rotate-180"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    ></path>
+                  </svg>
+                </div>
+              </summary>
+
+              <div class="bg-slate-50 border-t border-slate-200 p-8">
+                <div class="flex justify-between items-center mb-4">
+                  <h4 class="text-xl font-semibold text-slate-700">
+                    Artículos de la orden:
+                  </h4>
+                  <a
+                    (click)="isCompraModalOpen = true"
+                    *ngIf="orden.status !== 'En viaje'"
+                    class="cursor-pointer flex items-center gap-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold text-sm py-1.5 px-3 rounded-md transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <span>Agregar Compra</span>
+                  </a>
+
+                  <div
+                    *ngIf="isCompraModalOpen"
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+                  >
+                    <div
+                      class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md"
+                    >
+                      <div
+                        class="flex justify-between items-center border-b pb-3"
+                      >
+                        <h3 class="text-xl font-semibold">Agregar Compra</h3>
+                        <button
+                          (click)="isCompraModalOpen = false"
+                          class="text-gray-600 hover:text-gray-800 text-3xl leading-none"
+                        >
+                          &times;
+                        </button>
+                      </div>
+                      <form
+                        class="mt-4"
+                        (ngSubmit)="altaCompra(orden.id)"
+                        [formGroup]="compraForm"
+                      >
+                        <div class="mb-4">
+                          <label class="block text-sm font-medium text-gray-700"
+                            >Descripción</label
+                          >
+                          <input
+                            formControlName="descripcion"
+                            type="text"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="Descripción"
+                            required
+                          />
+                        </div>
+                        <div class="mb-4">
+                          <label class="block text-sm font-medium text-gray-700"
+                            >Proveedor</label
+                          >
+                          <input
+                            formControlName="proveedor"
+                            type="text"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="Proveedor"
+                            required
+                          />
+                        </div>
+                        <div class="mb-4">
+                          <label class="block text-sm font-medium text-gray-700"
+                            >Valor Declarado</label
+                          >
+                          <input
+                            formControlName="valor_declarado"
+                            type="number"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="Valor Declarado"
+                            required
+                          />
+                        </div>
+                        <div class="mb-4">
+                          <label class="block text-sm font-medium text-gray-700"
+                            >Adjuntar factura</label
+                          >
+                          <input
+                            formControlName="imagen_factura"
+                            type="file"
+                            accept="image/*"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            required
+                          />
+                        </div>
+                        <div class="flex justify-end">
+                          <button
+                            type="button"
+                            (click)="isCompraModalOpen = false"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg mr-2"
+                          >
+                            Cancelar
+                          </button>
+                          <button
+                            type="submit"
+                            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg"
+                          >
+                            Agregar
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <ul class="space-y-4">
+                  <li
+                    *ngFor="let compra of orden.compras"
+                    class="flex items-center justify-between p-4 bg-white rounded-lg border border-slate-200"
+                  >
+                    <div>
+                      <p class="text-lg font-bold text-slate-700">
+                        {{ compra.descripcion }}
+                      </p>
+                      <p class="text-base text-slate-500">
+                        ID: {{ compra.id }}
+                      </p>
+                      <p class="text-base text-slate-500">
+                        Proveedor: {{ compra.proveedor }}
+                      </p>
+                      <!-- Línea agregada para mostrar el estado -->
+                      <p class="text-base text-slate-500 font-medium">
+                        Estado:
+                        <span class="text-sky-600">{{ compra.estado }}</span>
+                      </p>
+                      <button
+                        *ngIf="compra.estado === 'En viaje a casilla'"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+                        (click)="confirmarRecepcionCompra(compra.id)"
+                      >
+                        Ya llegó el paquete!
+                      </button>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-lg font-semibold text-slate-800">
+                        ${{ compra.valor_declarado }}
+                      </p>
+                      <a
+                        href="{{ compra.imagen_factura }}"
+                        class="text-base text-red-500 hover:text-red-600 font-medium"
+                        >Ver factura</a
+                      >
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </details>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </div>
