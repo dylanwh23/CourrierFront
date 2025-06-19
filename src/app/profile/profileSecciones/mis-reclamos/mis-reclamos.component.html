@@ -4,36 +4,110 @@
         <h2 class="text-2xl font-bold text-white text-center tracking-wide">
             Mis Reclamos
         </h2>
+        <button (click)="abrirModalCrearTicket()"
+            class="bg-white text-red-600 px-4 py-2 rounded inline-block text-center  ">
+            Crear Ticket
+        </button>
     </div>
+    <div class="p-5 space-y-6">
 
-    <!-- Sección de reclamos -->
-    <div class="p-5 space-y-4">
-        <!-- Elemento ticket -->
-        <div class="border border-gray-300 p-4 rounded">
-            <div class="flex justify-between mb-2">
-                <span class="font-semibold text-lg">Asunto: Problema con el servicio</span>
-                <span class="text-sm text-gray-600">Fecha: 24/10/2023</span>
-            </div>
-            <div class="text-gray-800 mb-2">
-                Último mensaje: He intentado comunicarme sin éxito, por lo que aún no se ha resuelto el inconveniente.
-            </div>
-            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Ir al chat
-            </button>
-        </div>
+        <div class="p-5 space-y-4">
+            <ng-container *ngFor="let ticket of tickets; let i = index">
 
-        <!-- Puedes replicar el bloque anterior para más tickets -->
-        <div class="border border-gray-300 p-4 rounded">
-            <div class="flex justify-between mb-2">
-                <span class="font-semibold text-lg">Asunto: Facturación</span>
-                <span class="text-sm text-gray-600">Fecha: 23/10/2023</span>
-            </div>
-            <div class="text-gray-800 mb-2">
-                Último mensaje: No he recibido mi factura correspondiente a este mes.
-            </div>
-            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Ir al chat
-            </button>
+                <!-- Encabezado Pendientes -->
+                <div *ngIf="ticket.estado === 'pendiente' && (i === 0 || tickets[i - 1].estado !== 'pendiente')"
+                    class="text-xl font-bold mb-3 bg-yellow-100 text-yellow-800 rounded-xl px-3 py-1">
+                    Tickets Pendientes
+                </div>
+
+                <!-- Ticket pendiente -->
+                <div *ngIf="ticket.estado === 'pendiente'" class="border border-gray-300 p-4 rounded mb-3">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold text-lg">Asunto: {{ ticket.asunto }}</span>
+                        <span class="text-sm text-gray-600">
+                            Fecha: {{ ticket.created_at | date:'dd/MM/yyyy' }}
+                        </span>
+                    </div>
+                    <div class="text-gray-800 mb-2">
+                        Último mensaje:
+                        {{
+                        mensajesPorTicket[ticket.id]?.length
+                        ? mensajesPorTicket[ticket.id][mensajesPorTicket[ticket.id].length - 1].texto
+                        : 'No hay mensajes'
+                        }}
+                    </div>
+                    <a href="/soportechat"
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 inline-block text-center">
+                        Ir al chat
+                    </a>
+                </div>
+
+                <!-- Encabezado Completados -->
+                <div *ngIf="ticket.estado === 'completado' && (i === 0 || tickets[i - 1].estado !== 'completado')"
+                    class="text-xl font-bold mb-3 mt-8 bg-green-100 text-green-800 rounded-xl px-3 py-1">
+                    Tickets Completados
+                </div>
+
+                <!-- Ticket completado -->
+                <div *ngIf="ticket.estado === 'completado'" class="border border-gray-300 p-4 rounded mb-3 bg-gray-100">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold text-lg line-through">Asunto: {{ ticket.asunto }}</span>
+                        <span class="text-sm text-gray-600">
+                            Fecha: {{ ticket.created_at | date:'dd/MM/yyyy' }}
+                        </span>
+                    </div>
+                    <div class="text-gray-800 mb-2">
+                        Último mensaje:
+                        {{
+                        mensajesPorTicket[ticket.id]?.length
+                        ? mensajesPorTicket[ticket.id][mensajesPorTicket[ticket.id].length - 1].texto
+                        : 'No hay mensajes'
+                        }}
+                    </div>
+                    <a href="/soportechat"
+                        class="bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed inline-block text-center opacity-50 pointer-events-none">
+                        Chat cerrado
+                    </a>
+                </div>
+
+            </ng-container>
         </div>
     </div>
-</div>
+    <!-- Modal Crear Ticket -->
+    <div *ngIf="mostrarModalCrearTicket"
+        class="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-50">
+        <div class="bg-white rounded-lg p-6 w-96 relative">
+
+            <h2 class="text-xl font-semibold mb-4">Crear Nuevo Ticket</h2>
+
+            <form (ngSubmit)="crearTicket()" #formCrearTicket="ngForm" class="space-y-4">
+
+                <div>
+                    <label class="block font-medium mb-1">Orden ID</label>
+                    <input type="number" name="orden_id" required [(ngModel)]="nuevoTicket.orden_id"
+                        class="w-full border rounded px-3 py-2" />
+                </div>
+
+                <div>
+                    <label class="block font-medium mb-1">Asunto</label>
+                    <input type="text" name="asunto" required [(ngModel)]="nuevoTicket.asunto"
+                        class="w-full border rounded px-3 py-2" />
+                </div>
+
+                <div *ngIf="esAgente">
+                    <label class="block font-medium mb-1">ID de Usuario</label>
+                    <input type="number" name="user_id" required [(ngModel)]="nuevoTicket.user_id"
+                        class="w-full border rounded px-3 py-2" />
+                </div>
+
+                <div class="flex justify-end space-x-2 mt-4">
+                    <button type="button" (click)="cerrarModal()"
+                        class="px-4 py-2 rounded border border-gray-300">Cancelar</button>
+                    <button type="submit"
+                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Crear</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>

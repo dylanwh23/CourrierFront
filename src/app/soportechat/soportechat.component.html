@@ -1,144 +1,242 @@
 <!-- component -->
 <!-- This is an example component -->
 <div class="container mx-auto shadow-lg rounded-lg">
+
   <!-- header -->
   <div class="px-5 py-5 flex justify-between items-center bg-white border-b-2">
     <div class="flex items-center gap-3">
       <img src="images/logo.jpg" alt="ChinaGO Logo" class="w-10 h-10 rounded shadow" />
       <span class="font-semibold text-2xl text-red-600">Soporte ChinaGO</span>
     </div>
-    <div class="h-12 w-12 p-2 bg-red-600 rounded-full text-white font-semibold flex items-center justify-center" title="Agente">
-      AG
+
+    <!-- Derecha: Avatar + Botón de Estado -->
+    <div *ngIf="esAgente" class="flex items-center gap-4">
+      <!-- Avatar -->
+      <div class="h-12 w-12 p-2 bg-red-600 rounded-full text-white font-semibold flex items-center justify-center"
+        title="Agente">
+        AG
+      </div>
+
+
     </div>
-  </div>
-  <!-- end header -->
-  <div class="fixed inset-0 z-50 bg-white flex flex-row">
-    <!-- Lista de tickets activos -->
-    <aside class="w-72 bg-gray-100 border-r flex-shrink-0 h-full">
-        <a routerLink="/soporte" class="text-center bg-red-700 text-white font-semibold py-2 rounded hover:bg-red-800 transition">Inicio</a>
-  <h2 class="text-lg font-bold border-b pb-2 text-center">Chats activos</h2>
-      <ul>
-        <li
-          *ngFor="let ticket of tickets"
-          (click)="seleccionarTicket(ticket)"
-          [class.bg-red-100]="ticket.id === ticketSeleccionado?.id"
-          class="cursor-pointer p-3 border-b hover:bg-red-50 flex flex-col"
-        >
-          <span class="font-semibold text-red-700">Ticket #{{ ticket.id }}</span>
-          <span class="text-gray-700">Asunto: {{ ticket.asunto }}</span>
-          <span class="text-gray-500 text-xs">Orden: {{ ticket.orden_id }}</span>
-          <span class="text-gray-500 text-xs">Estado: {{ ticket.estado }}</span>
-          <ng-container *ngIf="ticket.user_id === userId; else agentePrimero">
-            <span class="text-gray-500 text-xs">Agente: {{ ticket.agente_id }}-{{ agenteNombre }} {{ agenteApellido }}</span>
-            <span class="text-gray-500 text-xs">Cliente {{ ticket.user_id }}</span>
+    <!-- end header -->
+    <div class="fixed inset-0 z-50 bg-white flex flex-row">
+
+      <!-- Lista de tickets activos -->
+      <aside class="w-72 bg-gray-100 border-r flex-shrink-0 h-full">
+        <div class="flex justify-center items-center space-x-4 my-4">
+          <!-- Botón Inicio -->
+          <a routerLink="/soporte"
+            class="text-center bg-red-700 text-white font-semibold py-2 px-4 rounded hover:bg-red-800 transition">
+            Inicio
+          </a>
+
+          <!-- Botón Estado de conexión -->
+
+
+          <!-- Botón Crear Ticket -->
+          <button (click)="abrirModalCrearTicket()"
+            class="rounded-md bg-gray-950/5 px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-950/10 border border-gray-300">
+            Crear Ticket
+          </button>
+        </div>
+        <div *ngIf="esAgente" class="flex items-center space-x-2">
+          <span class="text-sm font-medium text-gray-700">Estado:{{ estadoConexion }}</span>
+          <button (click)="toggleEstadoConexion()" [ngClass]="estadoConexion === 'activo' 
+      ? 'bg-green-100 text-green-800 hover:bg-green-200' 
+      : 'bg-gray-300 text-gray-800 hover:bg-gray-400'"
+            class="px-4 py-1 rounded-md font-semibold transition border border-gray-400">
+            {{ estadoConexion === 'activo' ? '🟢 Activo' : '⚪ Desconectado' }}
+          </button>
+        </div>
+
+        <h2 class="text-lg font-bold border-b pb-2 text-center ">Chats activos</h2>
+        <ul class="max-h-full overflow-y-auto pr-2">
+          <ng-container *ngFor="let ticket of tickets; let i = index">
+            <!-- Mostrar encabezado Pendientes solo antes del primer pendiente -->
+            <li *ngIf="ticket.estado === 'pendiente' && (i === 0 || tickets[i-1].estado !== 'pendiente')"
+              class="font-bold text-lg mt-4 mb-2 bg-yellow-100 text-yellow-800 rounded-xl ">
+              Pendientes
+            </li>
+
+            <!-- Mostrar encabezado Completados solo antes del primer completado -->
+            <li *ngIf="ticket.estado === 'completado' && (i === 0 || tickets[i-1].estado !== 'completado')"
+              class="font-bold text-lg mt-4 mb-2 bg-green-100 text-green-800 rounded-xl">
+              Completados
+            </li>
+
+            <!-- El ticket -->
+            <li (click)="seleccionarTicket(ticket)" [ngClass]="{
+          'bg-red-100': ticket.id === ticketSeleccionado?.id,
+          'opacity-70': ticket.estado === 'completado',
+          'cursor-pointer hover:bg-red-50': true
+        }" class="p-3 border-b flex flex-col transition-all">
+
+              <div class="flex justify-between items-center">
+                <span class="font-semibold text-red-700">Ticket #{{ ticket.id }}</span>
+                <span class="text-xs px-2 py-0.5 rounded-full" [ngClass]="{
+                'bg-yellow-100 text-yellow-800': ticket.estado === 'pendiente',
+                'bg-green-100 text-green-800': ticket.estado === 'completado'
+              }">
+                  {{ ticket.estado }}
+                </span>
+              </div>
+
+              <span class="truncate max-w-full">Asunto: {{ ticket.asunto }}</span>
+              <span class="text-xs text-gray-600">Orden: {{ ticket.orden_id }}</span>
+            </li>
           </ng-container>
-          <ng-template #agentePrimero>
-            <span class="text-gray-500 text-xs">Cliente {{ ticket.user_id }}</span>
-            <span class="text-gray-500 text-xs">Agente: {{ ticket.agente_id }}-{{ agenteNombre }} {{ agenteApellido }}</span>
-          </ng-template>
-        </li>
-      </ul>
-    </aside>
-    <!-- Chat del ticket seleccionado + info usuario a la derecha -->
-    <div class="flex-1 flex flex-row h-full">
-      <div class="flex-1 flex flex-col h-full">
-        <ng-container *ngIf="ticketSeleccionado; else seleccionaTicket">
-          <!-- Chatting inline, con mensajes dinámicos y animaciones -->
-          <div class="w-full px-5 flex flex-col justify-between h-full">
-            <div #mensajesContainer class="flex flex-col mt-5 space-y-4 flex-1 overflow-y-auto">
-              <div *ngFor="let mensaje of mensajes; let i = index">
-                <div 
-                  [ngClass]="mensaje.esUsuario ? 'flex justify-end' : 'flex justify-start'"
-                  [class.mensaje-fade-in]="true"
-                >
-                  <ng-container *ngIf="!mensaje.esUsuario; else agenteMsg">
-                    <!-- Mensaje recibido (usuario) a la izquierda -->
-                    <img src="https://ui-avatars.com/api/?name=Usuario&background=cccccc&color=222222" class="object-cover h-8 w-8 rounded-full mr-2" alt="Usuario" />
-                    <div 
-                      class="py-3 px-4 bg-gray-200 text-gray-900 rounded-br-3xl rounded-tr-3xl rounded-tl-xl max-w-lg"
-                    >
-                      {{ mensaje.texto }}
-                    </div>
-                  </ng-container>
-                  <ng-template #agenteMsg>
-                    <!-- Mensaje enviado (agente) a la derecha -->
-                    <div 
-                      class="py-3 px-4 bg-red-600 text-white rounded-bl-3xl rounded-tl-3xl rounded-tr-xl max-w-lg"
-                    >
-                      {{ mensaje.texto }}
-                    </div>
-                    <img src="images/logo.jpg" class="object-cover h-8 w-8 rounded-full ml-2" alt="Agente" />
-                  </ng-template>
+        </ul>
+      </aside>
+      <!-- Chat del ticket seleccionado + info usuario a la derecha -->
+      <div class="flex-1 flex flex-row h-full">
+        <div class="flex-1 flex flex-col h-full">
+          <ng-container *ngIf="ticketSeleccionado; else seleccionaTicket">
+            <!-- Chatting inline -->
+            <div class="w-full px-5 flex flex-col justify-between h-full">
+              <div #mensajesContainer class="flex flex-col mt-5 space-y-4 flex-1 overflow-y-auto">
+                <div *ngFor="let mensaje of mensajes; let i = index">
+                  <div [ngClass]="mensaje.esUsuario ? 'flex justify-end' : 'flex justify-start'"
+                    [class.mensaje-fade-in]="true">
+                    <ng-container *ngIf="!mensaje.esUsuario; else agenteMsg">
+                      <!-- Mensaje recibido  a la izquierda -->
+                      <img src="https://ui-avatars.com/api/?name=Usuario&background=cccccc&color=222222"
+                        class="object-cover h-8 w-8 rounded-full mr-2" alt="Usuario" />
+                      <div
+                        class="py-3 px-4 bg-gray-200 text-gray-900 rounded-br-3xl rounded-tr-3xl rounded-tl-xl max-w-lg">
+                        {{ mensaje.texto }}
+                      </div>
+                    </ng-container>
+                    <ng-template #agenteMsg>
+                      <!-- Mensaje enviado  a la derecha -->
+                      <div class="py-3 px-4 bg-red-600 text-white rounded-bl-3xl rounded-tl-3xl rounded-tr-xl max-w-lg">
+                        {{ mensaje.texto }}
+                      </div>
+                      <img src="images/logo.jpg" class="object-cover h-8 w-8 rounded-full ml-2" alt="Agente" />
+                    </ng-template>
+                  </div>
                 </div>
               </div>
+              <!-- Input para el agente/cliente -->
+              <!-- Input para el agente -->
+              <div *ngIf="ticketSeleccionado?.estado === 'completado'" class="text-sm text-gray-500 mx px-2">
+                Este ticket está marcado como <span class="font-semibold text-green-600">completado</span>. No se pueden
+                enviar más mensajes.
+              </div>
+              <form class="py-5 flex items-center gap-2" (submit)="enviarMensaje($event)">
+                <input
+                  class="w-full bg-gray-200 py-4 px-4 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition"
+                  type="text" [(ngModel)]="mensajeUsuario" name="mensajeUsuario"
+                  placeholder="Escribe tu respuesta al usuario..." autocomplete="off"
+                  [disabled]="ticketSeleccionado?.estado === 'completado'" />
+
+                <button type="submit"
+                  class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-semibold shadow transition disabled:opacity-50"
+                  [disabled]="ticketSeleccionado?.estado === 'completado'">
+                  Enviar
+                </button>
+              </form>
+
             </div>
-            <!-- Input para el agente -->
-            <form class="py-5 flex items-center gap-2" (submit)="enviarMensaje($event)">
-              <input
-                class="w-full bg-gray-200 py-4 px-4 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition"
-                type="text"
-                [(ngModel)]="mensajeUsuario"
-                name="mensajeUsuario"
-                placeholder="Escribe tu respuesta al usuario..."
-                autocomplete="off"
-              />
-              <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-semibold shadow transition">
-                Enviar
-              </button>
-            </form>
-          </div>
-        </ng-container>
-        <ng-template #seleccionaTicket>
-          <div class="flex-1 flex items-center justify-center text-gray-500">
-            Selecciona un ticket para comenzar el chat.
-          </div>
-        </ng-template>
-      </div>
-      
-      <!-- Panel lateral con info del usuario a la derecha -->
-      <div class="w-2/5 border-l-2 px-5 hidden lg:block h-full" *ngIf="ticketSeleccionado">
-        <div class="flex flex-col">
-          <div class="font-semibold text-xl py-4">
-            <!-- Cambia el título según si el usuario autenticado es cliente o agente -->
-            <ng-container *ngIf="ticketSeleccionado?.user_id === userId; else infoUsuario">
-              Información del agente
-            </ng-container>
-            <ng-template #infoUsuario>
-              Información del usuario
-            </ng-template>
-          </div>
-          <img 
-            [src]="'https://ui-avatars.com/api/?name=' + (usuarioTicket?.name || '') + '+' + (usuarioTicket?.surname || '') + '&background=cccccc&color=222222'" 
-            class="object-cover rounded-xl h-40 w-40 mx-auto mb-4" 
-            alt="Usuario" 
-          />
-          <ng-container *ngIf="usuarioTicket; else cargandoUsuario">
-            <div class="font-semibold">Nombre:</div>
-            <div class="mb-2">{{ usuarioTicket?.name }} {{ usuarioTicket?.surname }}</div>
-            <div class="font-semibold">Email:</div>
-            <div class="mb-2">{{ usuarioTicket?.email }}</div>
-            <div class="font-semibold">Cédula:</div>
-            <div class="mb-2">{{ usuarioTicket?.cedula }}</div>
-            <div class="font-semibold">Fecha de nacimiento:</div>
-            <div class="mb-2">{{ usuarioTicket?.fecha_nacimiento }}</div>
           </ng-container>
-          <ng-template #cargandoUsuario>
-            <div class="text-gray-400">Cargando datos de usuario...</div>
+          <ng-template #seleccionaTicket>
+            <div class="flex-1 flex items-center justify-center text-gray-500">
+              Selecciona un ticket para comenzar el chat.
+            </div>
           </ng-template>
-          <!-- Información del ticket -->
+        </div>
+
+        <!-- Panel lateral con info del usuario a la derecha -->
+        <div class="w-2/5 border-l-2 px-5 hidden lg:block h-full" *ngIf="ticketSeleccionado">
           <div class="flex flex-col">
-            <div class="font-semibold text-xl py-4">Información del ticket</div>
-            <div class="mb-2"><span class="font-semibold">ID:</span> {{ ticketSeleccionado?.id }}</div>
-            <div class="mb-2"><span class="font-semibold">Orden:</span> {{ ticketSeleccionado?.orden_id }}</div>
-            <div class="mb-2"><span class="font-semibold">Asunto:</span> {{ ticketSeleccionado?.asunto }}</div>
-            <div class="mb-2"><span class="font-semibold">Estado:</span> {{ ticketSeleccionado?.estado }}</div>
-            <div class="mb-2"><span class="font-semibold">Email agente:</span> {{ ticketSeleccionado?.agente_email || '' }}</div>
+            <div class="font-semibold text-xl py-4">
+              <!-- Cambia el título según si el usuario autenticado es cliente o agente -->
+              <ng-container *ngIf="ticketSeleccionado?.user_id === userId; else infoUsuario">
+                Información del agente
+              </ng-container>
+              <ng-template #infoUsuario>
+                Información del usuario
+              </ng-template>
+            </div>
+            <img
+              [src]="'https://ui-avatars.com/api/?name=' + (usuarioTicket?.name || '') + '+' + (usuarioTicket?.surname || '') + '&background=cccccc&color=222222'"
+              class="object-cover rounded-xl h-40 w-40 mx-auto mb-4" alt="Usuario" />
+            <ng-container *ngIf="usuarioTicket; else cargandoUsuario">
+              <div class="font-semibold">Nombre:</div>
+              <div class="mb-2">{{ usuarioTicket?.name }} {{ usuarioTicket?.surname }}</div>
+              <div class="font-semibold">Email:</div>
+              <div class="mb-2">{{ usuarioTicket?.email }}</div>
+              <div class="font-semibold">Cédula:</div>
+              <div class="mb-2">{{ usuarioTicket?.cedula }}</div>
+              <div class="font-semibold">Fecha de nacimiento:</div>
+              <div class="mb-2">{{ usuarioTicket?.fecha_nacimiento }}</div>
+            </ng-container>
+            <ng-template #cargandoUsuario>
+              <div class="text-gray-400">Cargando datos de usuario...</div>
+            </ng-template>
+            <!-- Información del ticket -->
+            <div class="flex flex-col">
+              <div class="font-semibold text-xl py-4">Información del ticket</div>
+              <div class="mb-2"><span class="font-semibold">ID:</span> {{ ticketSeleccionado?.id }}</div>
+              <div class="mb-2"><span class="font-semibold">Orden:</span> {{ ticketSeleccionado?.orden_id }}</div>
+              <div class="mb-2"><span class="font-semibold">Asunto:</span> {{ ticketSeleccionado?.asunto }}</div>
+              <div class="mb-2"> <span class="font-semibold">Estado:</span>
+                <span class="text-xs px-2 py-0.5 rounded-full" [ngClass]="{
+      'bg-yellow-100 text-yellow-800': ticketSeleccionado?.estado === 'pendiente',
+      'bg-green-100 text-green-800': ticketSeleccionado?.estado === 'completado'
+    }">
+                  {{ ticketSeleccionado?.estado }}
+                </span>
+              </div>
+              <div class="mb-2">
+                <button *ngIf="esAgente && ticketSeleccionado?.id && ticketSeleccionado?.estado !== 'completado'"
+                  (click)="marcarComoCompletado(ticketSeleccionado.id)"
+                  class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300">
+                  Marcar como completado
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Animaciones para los mensajes -->
+  <!-- Modal Crear Ticket -->
+  <div *ngIf="mostrarModalCrearTicket"
+    class="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-50">
+    <div class="bg-white rounded-lg p-6 w-96 relative">
 
+      <h2 class="text-xl font-semibold mb-4">Crear Nuevo Ticket</h2>
+
+      <form (ngSubmit)="crearTicket()" #formCrearTicket="ngForm" class="space-y-4">
+
+        <div>
+          <label class="block font-medium mb-1">Orden ID</label>
+          <input type="number" name="orden_id" required [(ngModel)]="nuevoTicket.orden_id"
+            class="w-full border rounded px-3 py-2" />
+        </div>
+
+        <div>
+          <label class="block font-medium mb-1">Asunto</label>
+          <input type="text" name="asunto" required [(ngModel)]="nuevoTicket.asunto"
+            class="w-full border rounded px-3 py-2" />
+        </div>
+
+        <div *ngIf="esAgente">
+          <label class="block font-medium mb-1">ID de Usuario</label>
+          <input type="number" name="user_id" required [(ngModel)]="nuevoTicket.user_id"
+            class="w-full border rounded px-3 py-2" />
+        </div>
+
+        <div class="flex justify-end space-x-2 mt-4">
+          <button type="button" (click)="cerrarModal()"
+            class="px-4 py-2 rounded border border-gray-300">Cancelar</button>
+          <button type="submit"
+            class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Crear</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
