@@ -67,19 +67,29 @@
 
             <!-- El ticket -->
             <li (click)="seleccionarTicket(ticket)" [ngClass]="{
-          'bg-red-100': ticket.id === ticketSeleccionado?.id,
-          'opacity-70': ticket.estado === 'completado',
-          'cursor-pointer hover:bg-red-50': true
-        }" class="p-3 border-b flex flex-col transition-all">
+      'bg-red-100': ticket.id === ticketSeleccionado?.id,
+      'opacity-70': ticket.estado === 'completado',
+      'cursor-pointer hover:bg-red-50': true
+    }" class="p-3 border-b flex flex-col transition-all">
 
               <div class="flex justify-between items-center">
                 <span class="font-semibold text-red-700">Ticket #{{ ticket.id }}</span>
-                <span class="text-xs px-2 py-0.5 rounded-full" [ngClass]="{
-                'bg-yellow-100 text-yellow-800': ticket.estado === 'pendiente',
-                'bg-green-100 text-green-800': ticket.estado === 'completado'
-              }">
-                  {{ ticket.estado }}
-                </span>
+
+                <div class="flex items-center space-x-2">
+                  <span class="text-xs px-2 py-0.5 rounded-full" [ngClass]="{
+        'bg-yellow-100 text-yellow-800': ticket.estado === 'pendiente',
+        'bg-green-100 text-green-800': ticket.estado === 'completado'
+      }">
+                    {{ ticket.estado }}
+                  </span>
+
+                  <!-- Badge notificación mensajes nuevos -->
+                  <span *ngIf="nuevosMensajesPorTicket[ticket.id] > 0"
+                    class="bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full min-w-[20px] text-center">
+                    {{ nuevosMensajesPorTicket[ticket.id] }}
+                  </span>
+                </div>
+
               </div>
 
               <span class="truncate max-w-full">Asunto: {{ ticket.asunto }}</span>

@@ -18,14 +18,18 @@ export class TicketService {
   private mensajeObserverSubject = new Subject<any>();
   public mensajeObserver$ = this.mensajeObserverSubject.asObservable();
 
+  // Subject para notificar actualizaciones de tickets
+  private ticketActualizadoSubject = new Subject<any>();
+  public ticketActualizado$ = this.ticketActualizadoSubject.asObservable();
+
 
 
   constructor() {
     // Opcional: Intenta cargar el usuario al iniciar el servicio
     // Esto es útil si el usuario ya tiene una sesión activa en el backend
-   
+
   }
-  
+
   crearTicket(ticket: {
     orden_id: number,
     asunto: string,
@@ -86,7 +90,40 @@ export class TicketService {
       return () => {
         console.log('❌ Desuscribiéndome del canal:', canal);
         pusher.unsubscribe(canal);
+       
       };
     });
+  }
+
+ escucharTicketActualizado(userId: number, esAgente: boolean = false): Observable<any> {
+  return new Observable(observer => {
+    Pusher.logToConsole = true;
+    const canal = esAgente ? `agente.${userId}` : `usuario.${userId}`;
+    const pusher = new Pusher('70d89654e257e8793754', {
+      cluster: 'sa1',
+      forceTLS: true,
+    });
+
+    const channel = pusher.subscribe(canal);
+
+    channel.bind('TicketActualizado', (data: any) => {
+      this.ngZone.run(() => {
+        observer.next(data);
+        this.ticketActualizadoSubject.next(data);
+      });
+    });
+    return () => {
+      pusher.unsubscribe(canal);
+       //  Esto cierra toda la conexión WebSocket
+    };
+  });
+}
+  // Métodos helper para iniciar escucha según el rol
+  escucharComoUsuario(userId: number): Observable<any> {
+    return this.escucharTicketActualizado(userId, false);
+  }
+
+  escucharComoAgente(agenteId: number): Observable<any> {
+    return this.escucharTicketActualizado(agenteId, true);
   }
 }
