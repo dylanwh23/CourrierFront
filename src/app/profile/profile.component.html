@@ -1,7 +1,10 @@
 <div class="flex flex-row w-full min-h-full">
     <div class="w-75">
         <div class="text-center py-2 border-red-700">
-            <h1 class="text-xl">Dylan Rodriguez</h1>
+            <h1 class="text-xl">
+  {{ (usuarioService.currentUser$ | async)?.name }} {{ (usuarioService.currentUser$ | async)?.surname }}
+            </h1>
+
         </div>
         <div>
             <ul class="list-none p-0 m-0 caret-transparent">
