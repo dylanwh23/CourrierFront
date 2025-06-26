@@ -4,17 +4,18 @@ import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
 import { PaqueteService } from '../servicios/paquete.service';
+import { CommonModule } from '@angular/common';
  // Asegúrate de que este modelo exista y sea correcto
 
 @Component({
   selector: 'app-profile',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
     
 })
 export class ProfileComponent implements OnInit {
-  private usuarioService = inject(UsuarioService);
+  public usuarioService = inject(UsuarioService);
   private paqueteService = inject(PaqueteService); // Asegúrate de que este servicio sea correcto
   currentUser$: Observable<User | null> = this.usuarioService.currentUser$;
   isAuthenticated$: Observable<boolean> = this.usuarioService.isAuthenticated$;
