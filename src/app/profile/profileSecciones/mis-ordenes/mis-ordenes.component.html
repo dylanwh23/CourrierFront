@@ -17,7 +17,7 @@
           <ul class="space-y-4 text-lg text-slate-600">
             <li class="flex items-start">
               <strong class="w-32 shrink-0 text-slate-800">Nombre:</strong>
-              <span>Dylan Rodriguez</span>
+              <span>{{ (usuarioService.currentUser$ | async)?.name }} {{ (usuarioService.currentUser$ | async)?.surname }}</span>
             </li>
             <li class="flex items-start">
               <strong class="w-32 shrink-0 text-slate-800">Dirección:</strong>

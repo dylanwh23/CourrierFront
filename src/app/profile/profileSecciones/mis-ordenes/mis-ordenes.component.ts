@@ -1,6 +1,6 @@
 import { Component, HostBinding, inject, OnInit, OnDestroy } from '@angular/core';
 import { PaqueteService } from '../../../servicios/paquete.service';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../servicios/usuario.service';
 import { Subject } from 'rxjs';
@@ -30,7 +30,7 @@ export interface Compra {
 @Component({
   selector: 'app-mis-ordenes',
   // standalone: true, // Asegúrate que tu componente esté configurado como standalone si es necesario
-  imports: [NgIf, ReactiveFormsModule, NgFor],
+  imports: [NgIf, ReactiveFormsModule, NgFor, CommonModule],
   templateUrl: './mis-ordenes.component.html',
   styleUrl: './mis-ordenes.component.css'
 })
@@ -39,7 +39,7 @@ export class MisOrdenesComponent implements OnInit, OnDestroy {
   @HostBinding('class') classes = 'flex flex-col my-16 min-h-5/6 min-w-5/6 bg-white mx-auto p-4 rounded-lg shadow-lg';
   
   private paqueteService = inject(PaqueteService);
-  private usuarioService = inject(UsuarioService);
+  public usuarioService = inject(UsuarioService);
   private fb = inject(FormBuilder);
   
   // --- Formularios Reactivos ---

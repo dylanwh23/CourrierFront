@@ -1,9 +1,14 @@
 export interface Ticket {
   id: number;
-  orden_id: number;
-  asunto: string;
-  estado: string;
-  user_id: number;
-  agente_id: number;
-  // Otros campos opcionales para compatibilidad/mock
+  numero?: string;
+  nombre?: string;
+  email?: string;
+  ultimaConsulta?: string;
+  asunto?: string;
+  orden_id?: number;
+  estado?: string;
+  user_id?: number;
+  agente_id?: number;
+  agente_email?: string;
+  created_at?:string;
 }

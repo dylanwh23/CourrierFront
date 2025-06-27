@@ -169,4 +169,7 @@ export class UsuarioService {
       { withCredentials: true }
     );
   }
+  actualizarEstadoAgente(data: { estado: 'activo' | 'desconectado' }): Observable<{ estado: string }> {
+  return this.http.post<{ estado: string }>(`${this.apiUrl}/actualizarEstadoAgente`, data, { withCredentials: true });
+}
 }
