@@ -21,6 +21,12 @@ export interface LoginData {
   password: string;
 }
 
+export interface ChangePasswordData {
+  current_password: string;
+  new_password: string;
+  confirm_new_password: string; 
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -47,6 +53,10 @@ export class UsuarioService {
   // Getter para acceder al valor actual del usuario de forma síncrona (úsalo con cuidado)
   public get currentUserValue(): User | null {
     return this.currentUserSubject.value;
+  }
+
+  public isLoggedIn(): boolean {
+    return this.currentUserValue !== null;
   }
 
   altaUsuario(data: RegisterData): Observable<any> {
@@ -172,4 +182,25 @@ export class UsuarioService {
   actualizarEstadoAgente(data: { estado: 'activo' | 'desconectado' }): Observable<{ estado: string }> {
   return this.http.post<{ estado: string }>(`${this.apiUrl}/actualizarEstadoAgente`, data, { withCredentials: true });
 }
+
+
+//cambiarContraseña
+  cambiarContraseña(data: ChangePasswordData): Observable<any> {
+    console.log('cambiarContraseña', data);
+
+    return this.http.post<any>(`${this.apiUrl}/updatePassword`, data, {
+      withCredentials: true}).pipe(
+      tap((response) => {
+        console.log('Contraseña actualizada exitosamente', response);
+      }
+      ),
+      catchError((error) => {
+        console.error('Error al actualizar la contraseña', error);
+        return throwError(() => error);
+      }
+    )
+  );
+}
+
+
 }

@@ -5,11 +5,12 @@ import { User } from '../interfaces/user.interface';
 import { RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
 import { PaqueteService } from '../servicios/paquete.service';
 import { CommonModule } from '@angular/common';
+import { MisDatosComponent } from './profileSecciones/mis-datos/mis-datos.component';
  // Asegúrate de que este modelo exista y sea correcto
 
 @Component({
   selector: 'app-profile',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, MisDatosComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
     
@@ -17,8 +18,9 @@ import { CommonModule } from '@angular/common';
 export class ProfileComponent implements OnInit {
   public usuarioService = inject(UsuarioService);
   private paqueteService = inject(PaqueteService); // Asegúrate de que este servicio sea correcto
-  currentUser$: Observable<User | null> = this.usuarioService.currentUser$;
-  isAuthenticated$: Observable<boolean> = this.usuarioService.isAuthenticated$;
+  public currentUser$: Observable<User | null> = this.usuarioService.currentUser$;
+  public isAuthenticated$: Observable<boolean> = this.usuarioService.isAuthenticated$;
+  sidebarOpen = false;
   ngOnInit() {
     this.currentUser$.subscribe(user => {
       if (user) {

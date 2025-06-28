@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     // Suscríbete a los queryParams para detectar cambios en la URL
     this.route.queryParams.subscribe((params) => {
       // Verifica si el parámetro 'email_verified' existe y es 'success'
-      if (params['email_verified'] === 'success') {
+      if (params['email-verified'] === 'success') {
         this.mostrarSuccessAlert = true;
       }
     });

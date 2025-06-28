@@ -12,7 +12,7 @@ import { MisOrdenesComponent } from './profile/profileSecciones/mis-ordenes/mis-
 import { MisReclamosComponent } from './profile/profileSecciones/mis-reclamos/mis-reclamos.component';
 import { EmailVerifiedComponent } from './email-verified/email-verified.component';
 import { SoportechatComponent } from './soportechat/soportechat.component';
-
+import { authGuard } from './guards/auth.guard'; 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'tarifas', component: TarifasComponent },
@@ -23,14 +23,15 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'email_verified', component: EmailVerifiedComponent },
   { path: 'soportechat', component: SoportechatComponent },
-   {
+  {
     path: 'profile',
     component: ProfileComponent,
+    canActivate: [authGuard],
     children: [
+      { path: '', redirectTo: 'misordenes', pathMatch: 'full' },
       { path: 'misdatos', component: MisDatosComponent },
       { path: 'misordenes', component: MisOrdenesComponent },
       { path: 'misreclamos', component: MisReclamosComponent }
     ]
   }
-
 ];

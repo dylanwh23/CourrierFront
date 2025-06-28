@@ -1,59 +1,75 @@
 <div class="flex flex-col h-fit">
-      <div class="bg-red-600 shadow-md">
+  <div class="bg-red-600 shadow-md">
     <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
       <h1 class="text-3xl font-bold text-white text-center tracking-wide">
         Mi perfil
       </h1>
     </div>
   </div>
-      <div class="p-6 md:p-8 space-y-4">
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="p-6 md:p-8 space-y-4">
+    <ul class="space-y-4">
+      <li class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="nombre" class="block text-sm font-semibold text-gray-600 mb-1">Nombre</label>
-          <input type="text" id="nombre" value="Dylan" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+          <span class="block  font-semibold text-gray-600 mb-1">Nombre</span>
+          <span class="block p-2 bg-gray-100 rounded-md">{{this.userData?.name}}</span>
         </div>
         <div>
-          <label for="apellido" class="block text-sm font-semibold text-gray-600 mb-1">Apellido</label>
-          <input type="text" id="apellido" value="Rodriguez" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+          <span class="block  font-semibold text-gray-600 mb-1">Apellido</span>
+          <span class="block p-2 bg-gray-100 rounded-md">{{this.userData?.surname}}</span>
         </div>
-      </div>
-
-      <div>
-        <label for="correo" class="block text-sm font-semibold text-gray-600 mb-1">Correo Electrónico</label>
-        <input type="email" id="correo" value="dylan.rodriguez@example.com" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
-      </div>
-
-      <div>
-          <label for="contrasena" class="block text-sm font-semibold text-gray-600 mb-1">Contraseña</label>
-          <div class="relative">
-              <input type="password" id="contrasena" value="************" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
-              <button class="absolute inset-y-0 right-0 px-3 text-sm text-gray-600 hover:text-red-700">Cambiar</button>
-          </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      </li>
+      <li>
+        <span class="block  font-semibold text-gray-600 mb-1">Correo Electrónico</span>
+        <span class="block p-2 bg-gray-100 rounded-md">{{this.userData?.email}}</span>
+      </li>
+      <li>
+        <span class="block  font-bold text-gray-600 mb-1">Contraseña</span>
+        <div class="relative">
+          <span class="block p-2 bg-gray-100 rounded-md">*********</span>
+          <button 
+            class="absolute inset-y-0 right-0 px-3 text-red-500 hover:text-red-700"
+            (click)="showPasswordForm = !showPasswordForm"
+            type="button"
+          >Cambiar</button>
+        </div>
+      </li>
+      <li class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="telefono" class="block text-sm font-semibold text-gray-600 mb-1">Teléfono</label>
-          <input type="tel" id="telefono" value="099 123 456" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+          <span class="block  font-semibold text-gray-600 mb-1">Cédula</span>
+          <span class="block p-2 bg-gray-100 rounded-md">{{this.userData?.cedula}}</span>
         </div>
         <div>
-          <label for="cedula" class="block text-sm font-semibold text-gray-600 mb-1">Cédula</label>
-          <input type="text" id="cedula" value="5.123.456-7" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+          <span class="block font-semibold text-gray-600 mb-1">Fecha de nacimiento</span>
+          <span class="block p-2 bg-gray-100 rounded-md">{{this.userData?.fecha_nacimiento}}</span>
         </div>
+      </li>
+    </ul>
+    <div class="border-t border-gray-200 pt-4"></div>
+
+    <div class="mt-6 w-1/2 mx-auto" *ngIf="showPasswordForm">
+      <form class="space-y-4" (ngSubmit)="onSubmit()" [formGroup]="cambiarContrasenaForm">
+        <div class="relative">
+          <label class="block text-sm font-medium text-gray-700">Contraseña Actual</label>
+          <input type="password" name="current_password" required formControlName="current_password"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
+          <input type="password" name="new_password" required formControlName="new_password"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Confirmar Nueva Contraseña</label>
+          <input type="password" name="confirmNewPassword" required formControlName="confirmarNuevaContraseña"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
+        </div>
+        <button type="submit"
+          class="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors">Actualizar
+          Contraseña</button>
+      </form>
+      <div  *ngIf="mensaje" class="mt-4 text-center text-red-600 font-semibold">
+        {{ mensaje }}
       </div>
-
-      <div class="border-t border-gray-200 pt-4"></div>
-
-      <div class="flex justify-end space-x-4">
-        <button class="px-4 py-2 font-semibold text-gray-800 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors duration-200">
-          Descartar
-        </button>
-        <button class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
-          Guardar Cambios
-        </button>
-      </div>
-
     </div>
+  </div>
 </div>
-

@@ -135,16 +135,16 @@
                 </div>
                 <div class="mb-4">
                   <label class="block text-sm font-medium text-gray-700"
-                    >Adjuntar comprobante/s de pago</label
+                    >Adjuntar comprobante de pago</label
                   >
-                  <input
-                    formControlName="imagen_factura"
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    class="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                    required
-                  />
+                    <input
+                      formControlName="imagen_factura"
+                      type="file"
+                      accept="image/*,application/pdf"
+                      class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                      required
+                      (change)="onFileSelected($event)"
+                    />
                 </div>
                 <div class="flex justify-end">
                   <button
@@ -175,18 +175,24 @@
                 class="flex justify-between items-center p-8 cursor-pointer hover:bg-slate-50 transition-colors"
               >
                 <div>
-                  <h3 class="text-2xl font-bold text-slate-800">
-                    #{{ orden.id }}
-                  </h3>
-                  <p class="text-base text-slate-500 mt-2">
+                    <h3 class="text-2xl font-bold text-slate-800">
+                    #{{ ordenes.indexOf(orden) + 1 }}
+                    </h3>
+                    <p class="text-base text-slate-500 mt-2">
+                    <strong>ID Orden:</strong> ${{ orden.id }}
+                  </p>  
+                  <p class="text-base text-slate-500">
                     <strong>Total:</strong> ${{ orden.valor_total }}
                   </p>
                   <p class="text-base text-slate-500">
                     <strong>Última Actualización:</strong>
                     {{ orden.ultima_fecha_actualizacion_estado }}
                   </p>
-                  <p class="text-base text-slate-400 mt-2">
-                    Tracking ID: {{ orden.tracking_id }}
+                  <p
+                    class="text-base text-slate-400 mt-2"
+                    *ngIf="orden.status === 'Arribado'"
+                  >
+                    Tracking ID: <a class="text-blue-600 underline " target="_blank" rel="noopener noreferrer" href="https://www.ues.com.uy/rastreo_paquete.html?autoload=true&cr={{ orden.tracking_id }}">{{ orden.tracking_id }}</a> 
                   </p>
                 </div>
                 <div class="flex flex-col items-center space-y-3">
@@ -326,6 +332,7 @@
                             accept="image/*"
                             class="mt-1 block w-full border border-gray-300 rounded-md p-2"
                             required
+                          (change)="onFileSelected($event)"
                           />
                         </div>
                         <div class="flex justify-end">
@@ -381,7 +388,8 @@
                         ${{ compra.valor_declarado }}
                       </p>
                       <a
-                        href="{{ compra.imagen_factura }}"
+                        target="_blank" rel="noopener noreferrer"
+                        href="http://localhost:8000/storage/facturas/{{ compra.imagen_factura }}"
                         class="text-base text-red-500 hover:text-red-600 font-medium"
                         >Ver factura</a
                       >

@@ -51,6 +51,8 @@ export class MisOrdenesComponent implements OnInit, OnDestroy {
   isCompraModalOpen = false;
   ordenes: Ordenes[] = [];
   user_id?: number;
+  compraFile: File | null = null;
+
   
   private destroy$ = new Subject<void>();
 
@@ -70,7 +72,6 @@ export class MisOrdenesComponent implements OnInit, OnDestroy {
       imagen_factura: ['', Validators.required], 
       valor_declarado: ['', [Validators.required, Validators.min(0)]],
 
-      // El user_id se agregará dinámicamente antes de enviar.
     });
 
     this.compraForm = this.fb.group({
@@ -149,12 +150,18 @@ export class MisOrdenesComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const ordenData = {
-      ...this.ordenForm.value,
-      user_id: this.user_id
-    };
+    // Usar FormData para enviar archivos correctamente
+    const formData = new FormData();
+    formData.append('descripcion', this.ordenForm.get('descripcion')?.value);
+    formData.append('proveedor', this.ordenForm.get('proveedor')?.value);
+    formData.append('valor_declarado', this.ordenForm.get('valor_declarado')?.value);
+    formData.append('user_id', String(this.user_id));
+    if (this.compraFile) {
+      formData.append('imagen_factura', this.compraFile, this.compraFile.name);
+    }
 
-    this.paqueteService.altaOrden(ordenData)
+    console.log('Datos de la orden a enviar (FormData):', formData);
+    this.paqueteService.altaOrden(formData)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
@@ -162,9 +169,21 @@ export class MisOrdenesComponent implements OnInit, OnDestroy {
           this.getOrdenes(); // <<--- ACTUALIZACIÓN AUTOMÁTICA
           this.isModalOpen = false;
           this.ordenForm.reset();
+          this.compraFile = null; // Limpia el archivo seleccionado
         },
         error: (error) => console.error('Error al crear la orden:', error)
       });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.compraFile = input.files[0];
+      console.log('Archivo de compra seleccionado:', this.compraFile);
+    } else {
+      this.compraFile = null;
+      console.log('No se seleccionó ningún archivo.');
+    }
   }
 
   /**
@@ -176,8 +195,14 @@ export class MisOrdenesComponent implements OnInit, OnDestroy {
         console.error("Formulario de compra inválido.");
         return;
     }
-
-    this.paqueteService.altaCompra(this.compraForm.value, ordenId)
+    const formData = new FormData();
+    formData.append('descripcion', this.compraForm.get('descripcion')?.value);
+    formData.append('proveedor', this.compraForm.get('proveedor')?.value);
+    formData.append('valor_declarado', this.compraForm.get('valor_declarado')?.value);
+    if (this.compraFile) {
+      formData.append('imagen_factura', this.compraFile, this.compraFile.name);
+    }
+    this.paqueteService.altaCompra(formData, ordenId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
@@ -185,6 +210,7 @@ export class MisOrdenesComponent implements OnInit, OnDestroy {
           this.getOrdenes(); // <<--- ACTUALIZACIÓN AUTOMÁTICA
           this.isCompraModalOpen = false;
           this.compraForm.reset();
+          this.compraFile = null; // Limpia el archivo seleccionado
         },
         error: (error) => console.error('Error al crear la compra:', error)
       });
@@ -215,7 +241,9 @@ export class MisOrdenesComponent implements OnInit, OnDestroy {
     });
   }
 
+  //capturar factura seleccionada
 
+  
 
   // --- Ciclo de Vida: ngOnDestroy ---
   ngOnDestroy(): void {
