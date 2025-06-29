@@ -233,11 +233,7 @@
             class="w-full border rounded px-3 py-2" />
         </div>
 
-        <div *ngIf="esAgente">
-          <label class="block font-medium mb-1">ID de Usuario</label>
-          <input type="number" name="user_id" required [(ngModel)]="nuevoTicket.user_id"
-            class="w-full border rounded px-3 py-2" />
-        </div>
+      
 
         <div class="flex justify-end space-x-2 mt-4">
           <button type="button" (click)="cerrarModal()"
