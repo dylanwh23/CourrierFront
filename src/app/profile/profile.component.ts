@@ -2,26 +2,29 @@ import { Component, inject, OnInit } from '@angular/core';
 import { UsuarioService } from '../servicios/usuario.service';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
-import { RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterOutlet, RouterLinkActive, Router } from '@angular/router';
 import { PaqueteService } from '../servicios/paquete.service';
 import { CommonModule } from '@angular/common';
 import { MisDatosComponent } from './profileSecciones/mis-datos/mis-datos.component';
- // Asegúrate de que este modelo exista y sea correcto
 
 @Component({
   selector: 'app-profile',
   imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, MisDatosComponent],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
-    
+  styleUrls: ['./profile.component.css']  // corregí aquí: es styleUrls, no styleUrl
 })
 export class ProfileComponent implements OnInit {
   public usuarioService = inject(UsuarioService);
-  private paqueteService = inject(PaqueteService); // Asegúrate de que este servicio sea correcto
+  private paqueteService = inject(PaqueteService);
+  private router = inject(Router);  // Inyectamos Router para navegar
+
   public currentUser$: Observable<User | null> = this.usuarioService.currentUser$;
   public isAuthenticated$: Observable<boolean> = this.usuarioService.isAuthenticated$;
+
   sidebarOpen = false;
+
   ngOnInit() {
+    // Suscripción para debug
     this.currentUser$.subscribe(user => {
       if (user) {
         console.log('Current user:', user);
@@ -30,13 +33,18 @@ export class ProfileComponent implements OnInit {
       }
     });
 
+    // Redirigir si NO está autenticado
+    this.isAuthenticated$.subscribe(authenticated => {
+      if (!authenticated) {
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   onLogout() {
     this.usuarioService.logout().subscribe({
       next: () => {
         console.log('Logout successful');
-        // Aquí podrías redirigir al usuario a la página de inicio o login
         window.location.href = '/';
       },
       error: (err) => {
@@ -44,5 +52,4 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
-
 }

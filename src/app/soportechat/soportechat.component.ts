@@ -2,6 +2,7 @@ import {
   Component, ViewChild, ElementRef, AfterViewChecked, OnInit,
   OnDestroy, Inject, PLATFORM_ID
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -59,6 +60,7 @@ export class SoportechatComponent implements AfterViewChecked, OnInit, OnDestroy
   constructor(
     private ticketService: TicketService,
     private usuarioService: UsuarioService,
+     private router: Router,        
     @Inject(PLATFORM_ID) private platformId: Object
 
   ) { console.log('SoportechatComponent constructor'); }
@@ -72,6 +74,10 @@ export class SoportechatComponent implements AfterViewChecked, OnInit, OnDestroy
       this.agenteApellido = localStorage.getItem('user_surname') || '';
       this.userId = Number(localStorage.getItem('user_id')) || 0;
       document.title = `Soporte ChinaGO - ${this.agenteNombre} ${this.agenteApellido}`;
+    }
+     if (this.userId === 0) {
+      this.router.navigate(['/login']);
+      return;
     }
 
     if (this.userId > 0) {
